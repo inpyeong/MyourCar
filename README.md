@@ -1,7 +1,7 @@
 # MyourCar
 자율주행 시스템 기반의 차량공유 애플리케이션입니다.
 
-# 개발 환경
+# Requirements
 
 ## Front-End
 
