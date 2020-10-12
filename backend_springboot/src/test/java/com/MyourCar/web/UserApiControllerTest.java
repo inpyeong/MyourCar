@@ -1,6 +1,5 @@
 package com.MyourCar.web;
 
-import com.MyourCar.web.UserController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(controllers = UserController.class)
-public class UserControllerTest {
+@WebMvcTest(controllers = UserApiController.class)
+public class UserApiControllerTest {
 
     @Autowired
     private MockMvc mvc;
