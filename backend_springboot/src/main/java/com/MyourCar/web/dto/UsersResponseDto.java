@@ -14,6 +14,7 @@ public class UsersResponseDto {
     private String email;
     private Integer state;
     private String address;
+    private Integer warning;
 
     public UsersResponseDto(Users entity) {
         this.id = entity.getId();
@@ -22,6 +23,7 @@ public class UsersResponseDto {
         this.email = entity.getEmail();
         this.state = entity.getState();
         this.address = entity.getAddress();
+        this.warning = entity.getWarning();
     }
 
 }
