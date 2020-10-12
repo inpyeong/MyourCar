@@ -1,14 +1,14 @@
 # MyourCar
 자율주행 시스템 기반의 차량공유 애플리케이션입니다.
 
-# Requirements
+## Requirements
 
-## Front-End
+### Front-End
 
-### node.js
+**node.js**
 * Version: v10.15.1
 
-### Android Studio
+**Android Studio**
 * Version: 4.0.2
 * SDK Manager
   * Android SDK: Android 10.0(Q)
@@ -32,25 +32,25 @@
   * Startup orientation
     * Portrait
 
-### JAVA
+**JAVA**
 * JAVA SE 11 LTS
 
-### React Native CLI
+**React Native CLI**
 * Version: 2.0.1
 
-### React Native
+**React Native**
 * Version: 0.61.5
 
 
 
-## Back-End
+#### Back-End
 
-### JAVA
+**JAVA**
 * JAVA SE 8 LTS
 
-### IntelliJ
+**IntelliJ**
 * Version: 2020.2.2
 * Build Tool: Maven Or Gradle
 
-### MySQL
+**MySQL**
 * mysql  Ver 8.0.21 for osx10.15 on x86_64
