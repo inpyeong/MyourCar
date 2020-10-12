@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UserResponseDtoTest {
+public class UsersResponseDtoTest {
 
     @Test
     public void lombokTest() {
@@ -13,7 +13,7 @@ public class UserResponseDtoTest {
         int amount = 1000;
 
         // when
-        UserResponseDto dto = new UserResponseDto(name, amount);
+        UsersResponseDto dto = new UsersResponseDto(name, amount);
 
         // then
         assertThat(dto.getName()).isEqualTo(name);
