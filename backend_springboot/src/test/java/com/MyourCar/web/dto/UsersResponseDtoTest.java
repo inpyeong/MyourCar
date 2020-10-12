@@ -6,17 +6,4 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class UsersResponseDtoTest {
 
-    @Test
-    public void lombokTest() {
-        // given
-        String name = "test";
-        int amount = 1000;
-
-        // when
-        UsersResponseDto dto = new UsersResponseDto(name, amount);
-
-        // then
-        assertThat(dto.getName()).isEqualTo(name);
-        assertThat(dto.getAmount()).isEqualTo(amount);
-    }
 }
