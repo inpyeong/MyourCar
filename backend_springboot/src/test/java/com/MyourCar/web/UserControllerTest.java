@@ -1,4 +1,4 @@
-package com.MyourCar;
+package com.MyourCar.web;
 
 import com.MyourCar.web.UserController;
 import org.junit.Test;
