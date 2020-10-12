@@ -1,5 +1,6 @@
 package com.MyourCar.web.dto;
 
+import com.MyourCar.domain.users.Users;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -7,7 +8,20 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UsersResponseDto {
 
-    private final String name;
-    private final int amount;
+    private Long id;
+    private String name;
+    private String phoneNumber;
+    private String email;
+    private Integer state;
+    private String address;
+
+    public UsersResponseDto(Users entity) {
+        this.id = entity.getId();
+        this.name = entity.getName();
+        this.phoneNumber = entity.getPhoneNumber();
+        this.email = entity.getEmail();
+        this.state = entity.getState();
+        this.address = entity.getAddress();
+    }
 
 }
