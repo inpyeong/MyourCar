@@ -22,7 +22,7 @@ import {
     GoogleSigninButton,
     statusCodes,
 } from '@react-native-community/google-signin';
-
+import axios from 'axios';
 
 class App extends Component {
     constructor(props) {
@@ -142,6 +142,18 @@ class App extends Component {
                         </View>
                     </View>}
                 </SafeAreaView>
+                <Button
+                    title="OAuth2 Test"
+                    onPress={() => {
+                        axios.get("http://localhost:8080/oauth2/authorization/google")
+                            .then(res => {
+                                console.log(res);
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            })
+                    }}
+                />
             </View>
         );
     }
