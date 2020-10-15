@@ -48,4 +48,13 @@ public class User {
         this.role = role;
     }
 
+    public User update(String name) {
+        this.name = name;
+
+        return this;
+    }
+
+    public String getRoleKey() {
+        return this.role.getKey();
+    }
 }
