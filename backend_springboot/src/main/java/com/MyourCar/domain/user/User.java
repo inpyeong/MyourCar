@@ -38,7 +38,7 @@ public class User {
     private Role role;
 
     @Builder
-    public User(Long id, String name, String phoneNumber, String email, Integer state, String address, Integer warning) {
+    public User(Long id, String name, String phoneNumber, String email, Integer state, String address, Integer warning, Role role) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;
