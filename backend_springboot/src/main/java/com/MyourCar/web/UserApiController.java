@@ -11,7 +11,7 @@ public class UserApiController {
 
     private final UserService userService;
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/api/user/{id}")
     public UserResponseDto findById(@PathVariable Long id) {
         return userService.findById(id);
     }
