@@ -1,7 +1,7 @@
 package com.MyourCar.web;
 
-import com.MyourCar.service.users.UsersService;
-import com.MyourCar.web.dto.UsersResponseDto;
+import com.MyourCar.service.user.UserService;
+import com.MyourCar.web.dto.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserApiController {
 
-    private final UsersService usersService;
+    private final UserService userService;
 
     @GetMapping("/user/{id}")
-    public UsersResponseDto findById(@PathVariable Long id) {
-        return usersService.findById(id);
+    public UserResponseDto findById(@PathVariable Long id) {
+        return userService.findById(id);
     }
 
 }

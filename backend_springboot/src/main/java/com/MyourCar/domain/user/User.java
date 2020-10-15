@@ -1,4 +1,4 @@
-package com.MyourCar.domain.users;
+package com.MyourCar.domain.user;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Users {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +34,7 @@ public class Users {
     private Integer warning;
 
     @Builder
-    public Users(Long id, String name, String phoneNumber, String email, Integer state, String address, Integer warning) {
+    public User(Long id, String name, String phoneNumber, String email, Integer state, String address, Integer warning) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;

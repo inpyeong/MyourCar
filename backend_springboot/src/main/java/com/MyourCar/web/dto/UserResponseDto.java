@@ -1,12 +1,12 @@
 package com.MyourCar.web.dto;
 
-import com.MyourCar.domain.users.Users;
+import com.MyourCar.domain.user.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class UsersResponseDto {
+public class UserResponseDto {
 
     private Long id;
     private String name;
@@ -16,7 +16,7 @@ public class UsersResponseDto {
     private String address;
     private Integer warning;
 
-    public UsersResponseDto(Users entity) {
+    public UserResponseDto(User entity) {
         this.id = entity.getId();
         this.name = entity.getName();
         this.phoneNumber = entity.getPhoneNumber();

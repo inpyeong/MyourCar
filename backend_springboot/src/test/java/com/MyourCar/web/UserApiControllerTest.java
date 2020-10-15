@@ -1,17 +1,12 @@
 package com.MyourCar.web;
 
-import com.MyourCar.domain.users.Users;
-import com.MyourCar.domain.users.UsersRepository;
-import lombok.Data;
+import com.MyourCar.domain.user.User;
+import com.MyourCar.domain.user.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
@@ -24,7 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 public class UserApiControllerTest {
 
     @Autowired
-    private UsersRepository usersRepository;
+    private UserRepository userRepository;
 
     @Test
     public void findByIdTest() {
@@ -48,10 +43,10 @@ public class UserApiControllerTest {
 //                .build());
 
         // when
-        List<Users> usersList = usersRepository.findAll();
+        List<User> userList = userRepository.findAll();
 
         // then
-        Users users = usersList.get(0);
+        User users = userList.get(0);
         assertThat(users.getId()).isEqualTo(id);
         assertThat(users.getName()).isEqualTo(name);
         assertThat(users.getPhoneNumber()).isEqualTo(phoneNumber);
