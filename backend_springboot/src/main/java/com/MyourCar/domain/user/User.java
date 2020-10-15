@@ -33,6 +33,10 @@ public class User {
     @Column(length = 100, nullable = false)
     private Integer warning;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
     @Builder
     public User(Long id, String name, String phoneNumber, String email, Integer state, String address, Integer warning) {
         this.name = name;
@@ -41,6 +45,7 @@ public class User {
         this.state = state;
         this.address = address;
         this.warning = warning;
+        this.role = role;
     }
 
 }
