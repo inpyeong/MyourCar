@@ -1,7 +1,7 @@
 package com.MyourCar.web;
 
 import com.MyourCar.service.cars.CarsService;
-import lombok.RequiredArgsConstructor;
+import com.MyourCar.web.dto.CarsResponseDto;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,15 +12,13 @@ public class CarsController {
         this.carsService = carsService;
     }
 
-    @RequestMapping("/users/{id}")
-    public CarsResponseDto findById(@PathVariable Long id) {
-        return carsService.findById(id);
-    }
+//    @RequestMapping("/users/{id}")
+//    public CarsResponseDto findById(@PathVariable Long id) {
+//        return carsService.findById(id);
+//    }
 
-    @RequestMapping(value = "/post", method = RequestMethod.POST)
-    @ResponseBody
-    public String create(CarsResponseDto carsResponseDto){
-        carsService.savePost(carsResponseDto);
-        return "redirect:/";
+    @PostMapping("/cars")
+    public Long create(@RequestBody CarsResponseDto carsResponseDto){
+        return carsService.savePost(carsResponseDto);
     }
 }

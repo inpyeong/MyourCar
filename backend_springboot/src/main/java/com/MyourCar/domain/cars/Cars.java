@@ -33,8 +33,7 @@ public class Cars {
     private Integer warning;
 
     @Builder
-    public Cars(Long id, String name, String phoneNumber, String email, Integer state, String address, Integer warning) {
-        this.id = id;
+    public Cars(String name, String phoneNumber, String email, Integer state, String address, Integer warning) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;

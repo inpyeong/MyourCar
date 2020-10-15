@@ -2,6 +2,7 @@ package com.MyourCar.web;
 
 import com.MyourCar.domain.cars.Cars;
 import com.MyourCar.domain.cars.CarsRepository;
+import com.MyourCar.web.dto.CarsResponseDto;
 import lombok.Data;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -23,6 +27,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 //@WebMvcTest(controllers = UserApiController.class)
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CarsApiControllerTest {
+
+    @LocalServerPort
+    private int port;
 
     @Autowired
     private CarsRepository carsRepository;
@@ -67,8 +74,8 @@ public class CarsApiControllerTest {
     }
     @Test
     public void testPostForObject_해더_포함해서_보내지_않기() {
-        Cars newCars = Cars.builder()
-                .id(2L)
+        // given
+        CarsResponseDto carsResponseDto = CarsResponseDto.builder()
                 .name("이인평")
                 .phoneNumber("01033637093")
                 .email("jinipyung@gmail.com")
@@ -76,8 +83,18 @@ public class CarsApiControllerTest {
                 .address("서울시 강서구")
                 .warning(0)
                 .build();
+        String url = "http://localhost:" + port + "/cars";
 
-        Cars car = restTemplate.postForObject("/post", newCars, Cars.class);
-//        log.info("employee: {}", employee);
+        // when
+        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, carsResponseDto, Long.class);
+
+        // then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+
+        List<Cars> all = carsRepository.findAll();
+        assertThat(all.get(0).getName()).isEqualTo("이인평");
+        assertThat(all.get(0).getPhoneNumber()).isEqualTo("01033637093");
+
     }
 }
