@@ -1,4 +1,4 @@
-package java.com.MyourCar.web.dto;
+package com.MyourCar.web.dto;
 
 import org.junit.Test;
 
