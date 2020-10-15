@@ -93,7 +93,7 @@ class App extends Component {
     componentDidMount = () => {
         GoogleSignin.configure({
             // webClientId: '218580306048-ikle5jtm4dpp21dilc9jedgiu7so4qvm.apps.googleusercontent.com',
-            // androidClientId: '318580306048-ikle5jtm4dpp21dilc9jedgiu7so4qvm.apps.googleusercontent.com',
+            androidClientId: '318580306048-ikle5jtm4dpp21dilc9jedgiu7so4qvm.apps.googleusercontent.com',
             // offlineAccess: true,
         });
     }
