@@ -4,6 +4,7 @@ import com.MyourCar.config.auth.dto.OAuthAttributes;
 import com.MyourCar.config.auth.dto.SessionUser;
 import com.MyourCar.domain.user.User;
 import com.MyourCar.domain.user.UserRepository;
+import com.nimbusds.oauth2.sdk.token.AccessToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
