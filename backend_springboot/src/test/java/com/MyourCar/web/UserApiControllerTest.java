@@ -1,30 +1,51 @@
 package com.MyourCar.web;
 
+import com.MyourCar.domain.user.Role;
 import com.MyourCar.domain.user.User;
 import com.MyourCar.domain.user.UserRepository;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
-//@WebMvcTest(controllers = UserApiController.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserApiControllerTest {
+
+    @LocalServerPort
+    private int port;
+
+    @Autowired
+    private WebApplicationContext context;
+
+    private MockMvc mvc;
 
     @Autowired
     private UserRepository userRepository;
 
+    @Before
+    public void setup() {
+        mvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
+    }
+
     @Test
-    public void findByIdTest() {
+    @WithMockUser(roles="GUEST")
+    public void findByIdTest() throws Exception {
         // get
-        Long id = 1L;
         String name = "이인평";
         String phoneNumber = "01033637093";
         String email = "jinipyung@gmail.com";
@@ -32,28 +53,30 @@ public class UserApiControllerTest {
         String address = "서울시 강서구";
         Integer warning = 0;
 
-//        usersRepository.save(Users.builder()
-//                .id(5l)
-//                .name(name)
-//                .phoneNumber(phoneNumber)
-//                .email(email)
-//                .state(state)
-//                .address(address)
-//                .warning(warning)
-//                .build());
+        User savedUser = userRepository.save(User.builder()
+                .name(name)
+                .phoneNumber(phoneNumber)
+                .email(email)
+                .state(state)
+                .address(address)
+                .warning(warning)
+                .role(Role.GUEST)
+                .build());
+
+        Long savedUserId = savedUser.getId();
+
+        String url = "http://localhost:" + port + "/api/user/" + savedUserId;
 
         // when
-        List<User> userList = userRepository.findAll();
+        mvc.perform(get(url)).andDo(print())
+                .andExpect(status().isOk())
 
         // then
-        User users = userList.get(0);
-        assertThat(users.getId()).isEqualTo(id);
-        assertThat(users.getName()).isEqualTo(name);
-        assertThat(users.getPhoneNumber()).isEqualTo(phoneNumber);
-        assertThat(users.getEmail()).isEqualTo(email);
-        assertThat(users.getState()).isEqualTo(state);
-        assertThat(users.getAddress()).isEqualTo(address);
-        assertThat(users.getWarning()).isEqualTo(warning);
-
+                .andExpect(jsonPath("name").value("이인평"))
+                .andExpect(jsonPath("phoneNumber").value("01033637093"))
+                .andExpect(jsonPath("email").value("jinipyung@gmail.com"))
+                .andExpect(jsonPath("state").value(0))
+                .andExpect(jsonPath("address").value("서울시 강서구"))
+                .andExpect(jsonPath("warning").value(0));
     }
 }
