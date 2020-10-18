@@ -17,28 +17,48 @@ public class Cars {
     @Column(length = 20, nullable = false)
     private String name;
 
-    @Column(length = 20, nullable = false)
-    private String phoneNumber;
+    @Column(nullable = false)
+    private Integer service_enable;
 
-    @Column(length = 45, nullable = false)
-    private String email;
+    @Column(length = 100, nullable = false)
+    private String return_location;
 
     @Column(nullable = false)
-    private Integer state;
+    private Integer user_id;
 
     @Column(length = 100, nullable = false)
-    private String address;
+    private String current_detailed_location;
 
     @Column(length = 100, nullable = false)
-    private Integer warning;
+    private String current_district_location;
+
+    @Column(length = 100, nullable = false)
+    private String available_start_time;
+
+    @Column(length = 100, nullable = false)
+    private String available_end_time;
+
+    @Column(nullable = false)
+    private Integer rent_fee;
+
+    @Column(length = 100, nullable = false)
+    private Integer driving_fee;
+
+    @Column(length = 100, nullable = false)
+    private Integer battery;
 
     @Builder
-    public Cars(String name, String phoneNumber, String email, Integer state, String address, Integer warning) {
+    public Cars(String name, Integer service_enable, String return_location, Integer user_id, String current_detailed_location, String current_district_location, String available_start_time, String available_end_time, Integer rent_fee, Integer driving_fee, Integer battery) {
         this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.state = state;
-        this.address = address;
-        this.warning = warning;
+        this.service_enable = service_enable;
+        this.return_location = return_location;
+        this.user_id = user_id;
+        this.current_detailed_location = current_detailed_location;
+        this.current_district_location = current_district_location;
+        this.available_start_time = available_start_time;
+        this.available_end_time = available_end_time;
+        this.rent_fee = rent_fee;
+        this.driving_fee = driving_fee;
+        this.battery = battery;
     }
 }

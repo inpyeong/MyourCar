@@ -3,6 +3,7 @@ package com.MyourCar.web;
 import com.MyourCar.domain.cars.Cars;
 import com.MyourCar.domain.cars.CarsRepository;
 import com.MyourCar.web.dto.CarsResponseDto;
+import com.MyourCar.web.dto.CarsSaveRequestDto;
 import lombok.Data;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -75,26 +76,29 @@ public class CarsApiControllerTest {
     @Test
     public void testPostForObject_해더_포함해서_보내지_않기() {
         // given
-        CarsResponseDto carsResponseDto = CarsResponseDto.builder()
-                .name("이인평")
-                .phoneNumber("01033637093")
-                .email("jinipyung@gmail.com")
-                .state(0)
-                .address("서울시 강서구")
-                .warning(0)
+        CarsSaveRequestDto carsSaveRequestDto = CarsSaveRequestDto.builder()
+                .name("이태훈")
+                .service_enable(0)
+                .return_location("서울시 성북구 정릉동")
+                .user_id(2)
+                .current_detailed_location("명지동")
+                .current_district_location("부산시 강서구")
+                .available_start_time("월~금/10:00")
+                .available_end_time("월~금/18:00")
+                .rent_fee(20000)
+                .driving_fee(5000)
+                .battery(85)
                 .build();
         String url = "http://localhost:" + port + "/cars";
 
         // when
-        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, carsResponseDto, Long.class);
+        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, carsSaveRequestDto, Long.class);
 
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
         List<Cars> all = carsRepository.findAll();
-        assertThat(all.get(0).getName()).isEqualTo("이인평");
-        assertThat(all.get(0).getPhoneNumber()).isEqualTo("01033637093");
-
+        assertThat(all.get(0).getName()).isEqualTo("이태훈");
     }
 }

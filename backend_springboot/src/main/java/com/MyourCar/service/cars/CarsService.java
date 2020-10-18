@@ -2,6 +2,7 @@ package com.MyourCar.service.cars;
 
 import com.MyourCar.domain.cars.CarsRepository;
 import com.MyourCar.web.dto.CarsResponseDto;
+import com.MyourCar.web.dto.CarsSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +21,8 @@ public class CarsService {
 //    }
 
     @Transactional
-    public Long savePost(CarsResponseDto carsResponseDto) {
-        return carsRepository.save(carsResponseDto.toEntity()).getId();
+    public Long savePost(CarsSaveRequestDto carsSaveRequestDto) {
+        return carsRepository.save(carsSaveRequestDto.toEntity()).getId();
     }
 
 }

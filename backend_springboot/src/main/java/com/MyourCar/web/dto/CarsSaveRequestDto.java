@@ -5,21 +5,51 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+
 @Getter
 @NoArgsConstructor
 public class CarsSaveRequestDto {
     private String name;
-    private String title;
+    private Integer service_enable;
+    private String return_location;
+    private Integer user_id;
+    private String current_detailed_location;
+    private String current_district_location;
+    private String available_start_time;
+    private String available_end_time;
+    private Integer rent_fee;
+    private Integer driving_fee;
+    private Integer battery;
 
     @Builder
-    public CarsSaveRequestDto(String name, String title) {
+    public CarsSaveRequestDto(String name, Integer service_enable, String return_location, Integer user_id, String current_detailed_location, String current_district_location, String available_start_time, String available_end_time, Integer rent_fee, Integer driving_fee, Integer battery) {
         this.name = name;
-        this.title = title;
+        this.service_enable = service_enable;
+        this.return_location = return_location;
+        this.user_id = user_id;
+        this.current_detailed_location = current_detailed_location;
+        this.current_district_location = current_district_location;
+        this.available_start_time = available_start_time;
+        this.available_end_time = available_end_time;
+        this.rent_fee = rent_fee;
+        this.driving_fee = driving_fee;
+        this.battery = battery;
     }
 
     public Cars toEntity(){
         return Cars.builder()
                 .name(name)
+                .service_enable(service_enable)
+                .return_location(return_location)
+                .user_id(user_id)
+                .current_detailed_location(current_detailed_location)
+                .current_district_location(current_district_location)
+                .available_start_time(available_start_time)
+                .available_end_time(available_end_time)
+                .rent_fee(rent_fee)
+                .driving_fee(driving_fee)
+                .battery(battery)
                 .build();
     }
 }
