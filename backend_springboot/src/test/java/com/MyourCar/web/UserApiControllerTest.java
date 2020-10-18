@@ -1,5 +1,6 @@
 package com.MyourCar.web;
 
+import com.MyourCar.config.auth.dto.SessionUser;
 import com.MyourCar.domain.user.Role;
 import com.MyourCar.domain.user.User;
 import com.MyourCar.domain.user.UserRepository;
@@ -14,6 +15,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import javax.servlet.http.HttpSession;
+
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
