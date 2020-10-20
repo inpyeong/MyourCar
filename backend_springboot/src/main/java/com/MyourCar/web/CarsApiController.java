@@ -6,10 +6,10 @@ import com.MyourCar.web.dto.CarsSaveRequestDto;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class CarsController {
+public class CarsApiController {
     private final CarsService carsService;
 
-    public CarsController(CarsService carsService){
+    public CarsApiController(CarsService carsService){
         this.carsService = carsService;
     }
 
