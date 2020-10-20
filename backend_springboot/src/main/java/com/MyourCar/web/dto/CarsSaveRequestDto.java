@@ -14,7 +14,6 @@ public class CarsSaveRequestDto {
     private String name;
     private Integer service_enable;
     private String return_location;
-    private Integer user_id;
     private String current_detailed_location;
     private String current_district_location;
     private Date available_start_time;
@@ -24,14 +23,13 @@ public class CarsSaveRequestDto {
     private Integer battery;
 
     @Builder
-    public CarsSaveRequestDto(String name, Integer service_enable, String return_location, Integer user_id,
+    public CarsSaveRequestDto(String name, Integer service_enable, String return_location,
                               String current_detailed_location, String current_district_location,
                               Date available_start_time, Date available_end_time, Integer rent_fee,
                               Integer driving_fee, Integer battery) {
         this.name = name;
         this.service_enable = service_enable;
         this.return_location = return_location;
-        this.user_id = user_id;
         this.current_detailed_location = current_detailed_location;
         this.current_district_location = current_district_location;
         this.available_start_time = available_start_time;
@@ -46,7 +44,6 @@ public class CarsSaveRequestDto {
                 .name(name)
                 .service_enable(service_enable)
                 .return_location(return_location)
-                .user_id(user_id)
                 .current_detailed_location(current_detailed_location)
                 .current_district_location(current_district_location)
                 .available_start_time(available_start_time)

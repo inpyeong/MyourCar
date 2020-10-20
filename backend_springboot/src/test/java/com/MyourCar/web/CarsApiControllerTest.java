@@ -41,7 +41,6 @@ public class CarsApiControllerTest {
                 .name("이태훈")
                 .service_enable(0)
                 .return_location("서울시 성북구 정릉동")
-                .user_id(2)
                 .current_detailed_location("명지동")
                 .current_district_location("부산시 강서구")
                 .available_start_time(new Date(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
