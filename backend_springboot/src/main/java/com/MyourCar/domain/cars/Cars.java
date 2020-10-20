@@ -1,13 +1,16 @@
 package com.MyourCar.domain.cars;
 
+import com.MyourCar.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class Cars {
@@ -46,6 +49,9 @@ public class Cars {
 
     @Column(length = 100, nullable = false)
     private Integer battery;
+
+    @ManyToOne
+    private User user;
 
     @Builder
     public Cars(String name, Integer service_enable, String return_location, String current_detailed_location,
