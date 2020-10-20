@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
+import java.util.Date;
 
 @Getter
 @NoArgsConstructor
@@ -16,14 +17,17 @@ public class CarsSaveRequestDto {
     private Integer user_id;
     private String current_detailed_location;
     private String current_district_location;
-    private String available_start_time;
-    private String available_end_time;
+    private Date available_start_time;
+    private Date available_end_time;
     private Integer rent_fee;
     private Integer driving_fee;
     private Integer battery;
 
     @Builder
-    public CarsSaveRequestDto(String name, Integer service_enable, String return_location, Integer user_id, String current_detailed_location, String current_district_location, String available_start_time, String available_end_time, Integer rent_fee, Integer driving_fee, Integer battery) {
+    public CarsSaveRequestDto(String name, Integer service_enable, String return_location, Integer user_id,
+                              String current_detailed_location, String current_district_location,
+                              Date available_start_time, Date available_end_time, Integer rent_fee,
+                              Integer driving_fee, Integer battery) {
         this.name = name;
         this.service_enable = service_enable;
         this.return_location = return_location;

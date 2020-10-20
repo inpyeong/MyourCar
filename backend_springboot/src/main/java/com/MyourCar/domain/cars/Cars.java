@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Getter
 @NoArgsConstructor
@@ -32,11 +33,13 @@ public class Cars {
     @Column(length = 100, nullable = false)
     private String current_district_location;
 
-    @Column(length = 100, nullable = false)
-    private String available_start_time;
+    @Column
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date available_start_time;
 
-    @Column(length = 100, nullable = false)
-    private String available_end_time;
+    @Column
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date available_end_time;
 
     @Column(nullable = false)
     private Integer rent_fee;
@@ -48,7 +51,9 @@ public class Cars {
     private Integer battery;
 
     @Builder
-    public Cars(String name, Integer service_enable, String return_location, Integer user_id, String current_detailed_location, String current_district_location, String available_start_time, String available_end_time, Integer rent_fee, Integer driving_fee, Integer battery) {
+    public Cars(String name, Integer service_enable, String return_location, Integer user_id,
+                String current_detailed_location, String current_district_location, Date available_start_time,
+                Date available_end_time, Integer rent_fee, Integer driving_fee, Integer battery) {
         this.name = name;
         this.service_enable = service_enable;
         this.return_location = return_location;
