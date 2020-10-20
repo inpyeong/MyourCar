@@ -13,12 +13,7 @@ public class CarsController {
         this.carsService = carsService;
     }
 
-//    @RequestMapping("/users/{id}")
-//    public CarsResponseDto findById(@PathVariable Long id) {
-//        return carsService.findById(id);
-//    }
-
-    @PostMapping("/cars")
+    @PostMapping("/api/cars")
     public Long create(@RequestBody CarsSaveRequestDto carsSaveRequestDto){
         return carsService.savePost(carsSaveRequestDto);
     }
