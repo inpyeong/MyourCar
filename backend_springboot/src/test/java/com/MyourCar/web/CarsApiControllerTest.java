@@ -7,23 +7,28 @@ import com.MyourCar.domain.user.User;
 import com.MyourCar.domain.user.UserRepository;
 import com.MyourCar.web.dto.CarsSaveRequestDto;
 import lombok.Data;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -41,7 +46,20 @@ public class CarsApiControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @Autowired
+    private WebApplicationContext context;
+
+    private MockMvc mvc;
+    @Before
+    public void setup() {
+        mvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
+    }
+
     @Test
+    @WithMockUser(roles="GUEST")
     public void testPostForObject_해더_포함해서_보내지_않기() throws ParseException {
         // given
         CarsSaveRequestDto carsSaveRequestDto = CarsSaveRequestDto.builder()
@@ -109,5 +127,30 @@ public class CarsApiControllerTest {
         // then
         Optional<Cars> cars = carsRepository.findById(1L);
         assertThat(cars.get().getUser().getName()).isEqualTo("이인평");
+    }
+    @Test
+    public void carsUpdate() throws ParseException {
+        // get
+
+        Cars car = Cars.builder()
+                .name("이태훈")
+                .service_enable(0)
+                .return_location("서울시 성북구 정릉동")
+                .current_detailed_location("명지동")
+                .current_district_location("부산시 강서구")
+                .available_start_time(new Date(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                        .parse("2020-10-25 22:00:00").getTime()))
+                .available_end_time(new Date(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                        .parse("2020-10-27 22:00:00").getTime()))
+                .rent_fee(200)
+                .driving_fee(50)
+                .battery(85)
+                .build();
+
+        String url = "http://localhost:" + port + "/api/cars/{id}";
+        Map<String, Integer> params = new HashMap<>();
+        params.put("id", 1);
+        // when
+        restTemplate.put(url, car, params);
     }
 }
