@@ -22,10 +22,10 @@ public class CarsApiController {
         return carsService.save(carsSaveRequestDto);
     }
 
-//    @PutMapping("/api/cars")
-//    public Long update(@RequestBody CarsUpdateRequestDto requestDto) {
-//        return carsService.updateServiceEnable(requestDto);
-//    }
+    @PutMapping("/api/cars")
+    public Long update(@RequestBody CarsUpdateRequestDto requestDto) {
+        return carsService.updateServiceEnable(requestDto);
+    }
 
     @PatchMapping("/api/cars/{id}")
     public Map<String, Object> patch(@PathVariable("id") long id, @RequestBody CarsUpdateRequestDto carsUpdateRequestDto) {
