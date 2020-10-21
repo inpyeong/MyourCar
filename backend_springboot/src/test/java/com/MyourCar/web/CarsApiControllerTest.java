@@ -6,6 +6,7 @@ import com.MyourCar.domain.user.Role;
 import com.MyourCar.domain.user.User;
 import com.MyourCar.domain.user.UserRepository;
 import com.MyourCar.web.dto.CarsSaveRequestDto;
+import com.MyourCar.web.dto.CarsUpdateRequestDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
@@ -35,7 +36,8 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
@@ -149,29 +151,27 @@ public class CarsApiControllerTest {
         Optional<Cars> cars = carsRepository.findById(1L);
         assertThat(cars.get().getUser().getName()).isEqualTo("이인평");
     }
+
     @Test
-    public void carsUpdate() throws ParseException {
+    @WithMockUser(roles="GUEST")
+    public void carsUpdate() throws Exception {
         // get
 
-        Cars car = Cars.builder()
-                .name("이태훈")
-                .service_enable(0)
+        CarsUpdateRequestDto carsUpdateRequestDto = CarsUpdateRequestDto.builder()
                 .return_location("서울시 성북구 정릉동")
-                .current_detailed_location("명지동")
-                .current_district_location("부산시 강서구")
-                .available_start_time(new Date(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                .available_start_time_str(new Date(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                         .parse("2020-10-25 22:00:00").getTime()))
-                .available_end_time(new Date(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                .available_end_time_str(new Date(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                         .parse("2020-10-27 22:00:00").getTime()))
                 .rent_fee(200)
                 .driving_fee(50)
-                .battery(85)
                 .build();
 
-        String url = "http://localhost:" + port + "/api/cars/{id}";
-        Map<String, Integer> params = new HashMap<>();
-        params.put("id", 1);
-        // when
-        restTemplate.put(url, car, params);
+        String content = objectMapper.writeValueAsString(carsUpdateRequestDto);
+        mvc.perform(patch("/api/cars/{id}", 1)
+                .content(content)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print());
     }
 }

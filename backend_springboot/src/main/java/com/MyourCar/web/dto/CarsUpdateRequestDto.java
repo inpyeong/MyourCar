@@ -30,26 +30,26 @@ public class CarsUpdateRequestDto {
         return new Date(DATE_FORMAT.parse(date).getTime());
     }
 
-    @Builder
-    public CarsUpdateRequestDto(Integer service_enable) {
-        this.service_enable = service_enable;
-    }
+//    @Builder
+//    public CarsUpdateRequestDto(Integer service_enable) {
+//        this.service_enable = service_enable;
+//    }
 
     @Builder
-    public CarsUpdateRequestDto(String return_location, String available_start_time_str,
-                                String available_end_time_str, Integer rent_fee, Integer driving_fee)
+    public CarsUpdateRequestDto(String return_location, Date available_start_time_str,
+                                Date available_end_time_str, Integer rent_fee, Integer driving_fee)
             throws ParseException {
         this.return_location = return_location;
-        this.available_start_time = parseDate(available_start_time_str);
-        this.available_end_time = parseDate(available_end_time_str);
+        this.available_start_time = available_start_time_str;
+        this.available_end_time = available_end_time_str;
         this.rent_fee = rent_fee;
         this.driving_fee = driving_fee;
     }
 
-    @Builder
-    public CarsUpdateRequestDto(String current_district_location, String current_detailed_location, Integer battery) {
-        this.current_detailed_location = current_detailed_location;
-        this.current_district_location = current_district_location;
-        this.battery = battery;
-    }
+//    @Builder
+//    public CarsUpdateRequestDto(String current_district_location, String current_detailed_location, Integer battery) {
+//        this.current_detailed_location = current_detailed_location;
+//        this.current_district_location = current_district_location;
+//        this.battery = battery;
+//    }
 }
