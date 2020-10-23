@@ -1,5 +1,6 @@
 package com.MyourCar.domain.cars;
 
+import com.MyourCar.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

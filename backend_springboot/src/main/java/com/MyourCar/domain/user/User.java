@@ -56,8 +56,4 @@ public class User {
 
     @Column(length = 100, nullable = false)
     private Integer warning;
-
-    @OneToMany(mappedBy = "user")
-    private Set<Cars> cars = new HashSet<>();
-
 }
