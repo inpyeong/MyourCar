@@ -1,13 +1,19 @@
 package com.MyourCar.domain.cars;
 
+import com.MyourCar.domain.reviews.Reviews;
+import com.MyourCar.domain.services.Services;
 import com.MyourCar.domain.user.User;
+import com.MyourCar.web.dto.ReviewsSaveRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -52,6 +58,12 @@ public class Cars {
 
     @ManyToOne
     private User user;
+
+    @OneToMany(mappedBy = "cars")
+    private Set<Reviews> reviews = new HashSet<>();
+
+    @OneToOne(mappedBy = "cars")
+    private Services services;
 
     @Builder
     public Cars(String name, Integer service_enable, String return_location, String current_detailed_location,

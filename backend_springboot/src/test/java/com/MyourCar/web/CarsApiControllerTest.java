@@ -30,6 +30,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -77,7 +78,7 @@ public class CarsApiControllerTest {
     public void testPostForObject_해더_포함해서_보내지_않기() throws Exception {
         // given
         CarsSaveRequestDto carsSaveRequestDto = CarsSaveRequestDto.builder()
-                .name("이태훈")
+                .name("쏘나타")
                 .service_enable(0)
                 .return_location("서울시 성북구 정릉동")
                 .current_detailed_location("명지동")
@@ -113,6 +114,7 @@ public class CarsApiControllerTest {
     }
 
     @Test
+    @Transactional
     public void carsAndUserRelation() throws ParseException {
         // get
         User user = User.builder()
@@ -160,9 +162,9 @@ public class CarsApiControllerTest {
         CarsUpdateRequestDto carsUpdateRequestDto = CarsUpdateRequestDto.builder()
                 .return_location("서울시 성북구 정릉동")
                 .available_start_time_str(new Date(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                        .parse("2020-10-25 22:00:00").getTime()))
+                        .parse("2020-10-21 22:00:00").getTime()))
                 .available_end_time_str(new Date(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                        .parse("2020-10-27 22:00:00").getTime()))
+                        .parse("2020-10-22 22:00:00").getTime()))
                 .rent_fee(200)
                 .driving_fee(50)
                 .build();
