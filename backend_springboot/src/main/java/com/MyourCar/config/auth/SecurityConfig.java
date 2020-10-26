@@ -16,7 +16,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-
+                .csrf().disable()
                 .headers().frameOptions().disable()
                 .and()
                     .authorizeRequests()
@@ -26,8 +26,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .logout()
                         // Deep Linking 해서 설정한 URL 작성하기.
                         .logoutSuccessUrl("/")
-                .and()
-                    .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .and()
                     .oauth2Login()
                         .userInfoEndpoint()

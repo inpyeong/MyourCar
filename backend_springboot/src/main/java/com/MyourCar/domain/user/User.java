@@ -1,10 +1,14 @@
 package com.MyourCar.domain.user;
 
+import com.MyourCar.domain.cars.Cars;
+import com.MyourCar.domain.services.Services;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -36,6 +40,15 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Cars> cars = new HashSet<>();
+
+//    @OneToMany(mappedBy = "user")
+//    private Services services;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Services> services = new HashSet<>();
 
     @Builder
     public User(Long id, String name, String phoneNumber, String email, Integer state, String address, Integer warning, Role role) {

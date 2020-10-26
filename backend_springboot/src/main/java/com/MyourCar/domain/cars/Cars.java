@@ -1,13 +1,22 @@
 package com.MyourCar.domain.cars;
 
+import com.MyourCar.domain.reviews.Reviews;
+import com.MyourCar.domain.services.Services;
+import com.MyourCar.domain.user.User;
+import com.MyourCar.web.dto.ReviewsSaveRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class Cars {
@@ -23,9 +32,6 @@ public class Cars {
 
     @Column(length = 100, nullable = false)
     private String return_location;
-
-    @Column(nullable = false)
-    private Integer user_id;
 
     @Column(length = 100, nullable = false)
     private String current_detailed_location;
@@ -50,14 +56,25 @@ public class Cars {
     @Column(length = 100, nullable = false)
     private Integer battery;
 
+    @ManyToOne
+    private User user;
+
+    @OneToMany(mappedBy = "cars")
+    private Set<Reviews> reviews = new HashSet<>();
+
+//    @OneToOne(mappedBy = "cars")
+//    private Services services;
+
+    @OneToMany(mappedBy = "cars")
+    private Set<Services> services = new HashSet<>();
+
     @Builder
-    public Cars(String name, Integer service_enable, String return_location, Integer user_id,
-                String current_detailed_location, String current_district_location, Date available_start_time,
-                Date available_end_time, Integer rent_fee, Integer driving_fee, Integer battery) {
+    public Cars(String name, Integer service_enable, String return_location, String current_detailed_location,
+                String current_district_location, Date available_start_time, Date available_end_time, Integer rent_fee,
+                Integer driving_fee, Integer battery) {
         this.name = name;
         this.service_enable = service_enable;
         this.return_location = return_location;
-        this.user_id = user_id;
         this.current_detailed_location = current_detailed_location;
         this.current_district_location = current_district_location;
         this.available_start_time = available_start_time;

@@ -12,14 +12,14 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 @Service
 public class UserService {
-    private final UserRepository usersRepository;
+    private final UserRepository userRepository;
     private final HttpSession httpSession;
 
     public UserResponseDto findByEmail() {
 
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
 
-        User entity = usersRepository.findByEmail(user.getEmail())
+        User entity = userRepository.findByEmail(user.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email=" + user.getEmail()));
 
         return new UserResponseDto(entity);
@@ -27,7 +27,7 @@ public class UserService {
 
     public UserResponseDto findById(Long id) {
 
-        User entity = usersRepository.findById(id)
+        User entity = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. id=" + id));
 
         return new UserResponseDto(entity);
