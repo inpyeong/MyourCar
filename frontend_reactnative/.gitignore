@@ -57,3 +57,6 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# spring-boot-starter-oauth2-security
+../backend_springboot/src/main/resources/
