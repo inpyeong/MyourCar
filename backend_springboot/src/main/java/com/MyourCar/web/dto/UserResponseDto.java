@@ -16,14 +16,14 @@ public class UserResponseDto {
     private String address;
     private Integer warning;
 
-    public UserResponseDto(User entity) {
-        this.id = entity.getId();
-        this.name = entity.getName();
-        this.phoneNumber = entity.getPhoneNumber();
-        this.email = entity.getEmail();
-        this.state = entity.getState();
-        this.address = entity.getAddress();
-        this.warning = entity.getWarning();
-    }
+//    public UserResponseDto(User entity) {
+//        this.id = entity.getId();
+//        this.name = entity.getName();
+//        this.phoneNumber = entity.getPhoneNumber();
+//        this.email = entity.getEmail();
+//        this.state = entity.getState();
+//        this.address = entity.getAddress();
+//        this.warning = entity.getWarning();
+//    }
 
 }

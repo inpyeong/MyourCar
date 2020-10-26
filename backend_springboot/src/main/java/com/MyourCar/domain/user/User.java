@@ -2,44 +2,61 @@ package com.MyourCar.domain.user;
 
 import com.MyourCar.domain.cars.Cars;
 import com.MyourCar.domain.services.Services;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@NoArgsConstructor
 @Entity
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = "email")
+})
+@Getter
+@Setter
+@NoArgsConstructor
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 20, nullable = false)
+    @Column(nullable = false)
     private String name;
+
+    @Email
+    @Column(nullable = false)
+    private String email;
+
+    private String imageUrl;
+
+    @Column(nullable = false)
+    private Boolean emailVerified = false;
+
+    @JsonIgnore
+    private String password;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private AuthProvider provider;
+
+    private String providerId;
+
+
 
     @Column(length = 20, nullable = false)
     private String phoneNumber;
-
-    @Column(length = 45, nullable = false)
-    private String email;
 
     @Column(nullable = false)
     private Integer state;
 
     @Column(length = 100, nullable = false)
-    private String address;
-
-    @Column(length = 100, nullable = false)
     private Integer warning;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Role role;
 
     @OneToMany(mappedBy = "user")
     private Set<Cars> cars = new HashSet<>();
@@ -49,25 +66,4 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private Set<Services> services = new HashSet<>();
-
-    @Builder
-    public User(Long id, String name, String phoneNumber, String email, Integer state, String address, Integer warning, Role role) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.state = state;
-        this.address = address;
-        this.warning = warning;
-        this.role = role;
-    }
-
-    public User update(String name) {
-        this.name = name;
-
-        return this;
-    }
-
-    public String getRoleKey() {
-        return this.role.getKey();
-    }
 }
