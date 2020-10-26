@@ -62,8 +62,11 @@ public class Cars {
     @OneToMany(mappedBy = "cars")
     private Set<Reviews> reviews = new HashSet<>();
 
-    @OneToOne(mappedBy = "cars")
-    private Services services;
+//    @OneToOne(mappedBy = "cars")
+//    private Services services;
+
+    @OneToMany(mappedBy = "cars")
+    private Set<Services> services = new HashSet<>();
 
     @Builder
     public Cars(String name, Integer service_enable, String return_location, String current_detailed_location,

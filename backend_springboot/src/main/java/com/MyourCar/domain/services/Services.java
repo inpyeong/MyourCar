@@ -34,10 +34,10 @@ public class Services {
     @Column(length = 100, nullable = false)
     private String parking_type;
 
-    @OneToOne
+    @ManyToOne
     private Cars cars;
 
-    @OneToOne
+    @ManyToOne
     private User user;
 
     @OneToOne(mappedBy = "services")

@@ -44,8 +44,11 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Cars> cars = new HashSet<>();
 
-    @OneToOne(mappedBy = "user")
-    private Services services;
+//    @OneToMany(mappedBy = "user")
+//    private Services services;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Services> services = new HashSet<>();
 
     @Builder
     public User(Long id, String name, String phoneNumber, String email, Integer state, String address, Integer warning, Role role) {
