@@ -1,6 +1,6 @@
 package com.MyourCar.service.reviews;
 
-import com.MyourCar.config.auth.dto.SessionUser;
+
 import com.MyourCar.domain.cars.Cars;
 import com.MyourCar.domain.cars.CarsRepository;
 import com.MyourCar.domain.reviews.Reviews;

@@ -1,6 +1,5 @@
 package com.MyourCar.service.cars;
 
-import com.MyourCar.config.auth.dto.SessionUser;
 import com.MyourCar.domain.cars.Cars;
 import com.MyourCar.domain.cars.CarsRepository;
 import com.MyourCar.domain.user.User;
@@ -36,14 +35,6 @@ public class CarsService {
         return carsRepository.save(carsSaveRequestDto.toEntity()).getId();
     }
 
-    @Transactional
-    public Long updateServiceEnable(CarsUpdateRequestDto requestDto) {
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
-
-        Long id = userRepository.findByEmail(user.getEmail()).get().getId();
-
-        return 1L;
-    }
     @Transactional
     public int patch(long id, CarsUpdateRequestDto carsUpdateRequestDto) {
         Optional<Cars> optionalCars = carsRepository.findById(id);
