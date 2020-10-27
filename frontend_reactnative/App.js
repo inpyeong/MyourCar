@@ -93,7 +93,8 @@ class App extends Component {
             Main: {
                 screen: Screen.MainScreen,
                 options: MainScreenOptions,
-            }
+            },
+
         }
         if(this.state.loading) {
             return (

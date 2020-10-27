@@ -5,6 +5,7 @@ import {
     StepTwoScreen,
 } from './signUp';
 import Oauth2Screen from './Oauth2';
+import SideDrawerScreen from './sideDrawer';
 
 export default Screen = {
     LoginScreen,
@@ -12,5 +13,6 @@ export default Screen = {
     StepOneScreen,
     StepTwoScreen,
     Oauth2Screen,
+    SideDrawerScreen,
 }
 

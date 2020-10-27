@@ -17,6 +17,7 @@ export const loginStyles = StyleSheet.create({
         fontSize: 40,
         fontWeight: 'bold',
         marginTop: 170,
+        color: 'rgb(167, 169, 177)',
     },
     inputTextContainer: {
         flex: 1,
