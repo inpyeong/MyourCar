@@ -4,7 +4,6 @@ import com.MyourCar.domain.cars.Cars;
 import com.MyourCar.domain.cars.CarsRepository;
 import com.MyourCar.domain.reviews.Reviews;
 import com.MyourCar.domain.reviews.ReviewsRepository;
-import com.MyourCar.domain.user.Role;
 import com.MyourCar.domain.user.User;
 import com.MyourCar.domain.user.UserRepository;
 import com.MyourCar.web.dto.CarsSaveRequestDto;

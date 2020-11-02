@@ -2,7 +2,7 @@ package com.MyourCar.web;
 
 import com.MyourCar.domain.cars.Cars;
 import com.MyourCar.domain.cars.CarsRepository;
-import com.MyourCar.domain.user.Role;
+import com.MyourCar.domain.user.AuthProvider;
 import com.MyourCar.domain.user.User;
 import com.MyourCar.domain.user.UserRepository;
 import com.MyourCar.web.dto.CarsSaveRequestDto;
@@ -117,15 +117,23 @@ public class CarsApiControllerTest {
     @Transactional
     public void carsAndUserRelation() throws ParseException {
         // get
-        User user = User.builder()
-                .name("이인평")
-                .phoneNumber("01033637093")
-                .email("jinipyung@gmail.com")
-                .state(0)
-                .address("서울시 강서구")
-                .warning(0)
-                .role(Role.GUEST)
-                .build();
+//        User user = User.builder()
+//                .name("이인평")
+//                .phoneNumber("01033637093")
+//                .email("jinipyung@gmail.com")
+//                .state(0)
+//                .address("서울시 강서구")
+//                .warning(0)
+//                .role(Role.GUEST)
+//                .build();
+
+        User user = new User();
+        user.setName("이인평");
+        user.setEmail("jinipyung@naver.com");
+        user.setPhoneNumber("01000000000");
+        user.setProvider(AuthProvider.local);
+        user.setState(0);
+        user.setWarning(0);
 
         Cars car = Cars.builder()
                 .name("이태훈")
@@ -155,7 +163,7 @@ public class CarsApiControllerTest {
     }
 
     @Test
-    @WithMockUser(roles="GUEST")
+    @WithMockUser(roles="USER")
     public void carsUpdate() throws Exception {
         // get
 
@@ -166,7 +174,7 @@ public class CarsApiControllerTest {
                 .available_end_time_str(new Date(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                         .parse("2020-10-22 22:00:00").getTime()))
                 .rent_fee(200)
-                .driving_fee(50)
+                .driving_fee(18)
                 .build();
 
         String content = objectMapper.writeValueAsString(carsUpdateRequestDto);
@@ -174,6 +182,9 @@ public class CarsApiControllerTest {
                 .content(content)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
+                .andDo(print());
+
+        mvc.perform(get("/user/me"))
                 .andDo(print());
     }
 }

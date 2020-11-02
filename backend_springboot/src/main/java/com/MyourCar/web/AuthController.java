@@ -1,4 +1,4 @@
-package com.MyourCar.web.dto;
+package com.MyourCar.web;
 
 import com.MyourCar.domain.user.AuthProvider;
 import com.MyourCar.domain.user.User;
