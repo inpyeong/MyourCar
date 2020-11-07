@@ -10,6 +10,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -40,8 +42,8 @@ public class Services {
     @ManyToOne
     private User user;
 
-    @OneToOne(mappedBy = "services")
-    private Reports reports;
+    @OneToMany(mappedBy = "services")
+    private Set<Reports> reports = new HashSet<>();
 
     @Builder
     public Services(String call_location, Date service_start_time, Date service_end_time, String parking_type) {

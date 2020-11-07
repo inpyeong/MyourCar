@@ -26,7 +26,7 @@ public class Reports {
     @Column(nullable = false)
     private Integer type;
 
-    @OneToOne
+    @ManyToOne
     private Services services;
 
     @Builder
