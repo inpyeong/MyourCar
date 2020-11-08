@@ -61,9 +61,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Cars> cars = new HashSet<>();
 
-//    @OneToMany(mappedBy = "user")
-//    private Services services;
-
     @OneToMany(mappedBy = "user")
     private Set<Services> services = new HashSet<>();
 }
