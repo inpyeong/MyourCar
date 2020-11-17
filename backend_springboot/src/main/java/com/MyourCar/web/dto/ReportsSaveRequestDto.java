@@ -13,7 +13,9 @@ import java.util.Date;
 public class ReportsSaveRequestDto {
     private String comment;
     private Integer type;
-
+    private String firstImage;
+    private String secondImage;
+    private Long serviceId;
 
     @Builder
     public ReportsSaveRequestDto(String comment, Integer type){
@@ -21,10 +23,13 @@ public class ReportsSaveRequestDto {
         this.type = type;
     }
 
-    public Reports toEntity(){
+    public Reports toEntity(Services services){
         return Reports.builder()
                 .comment(comment)
                 .type(type)
+                .firstImage(firstImage)
+                .secondImage(secondImage)
+                .services(services)
                 .build();
     }
 }
