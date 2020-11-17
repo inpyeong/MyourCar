@@ -1,14 +1,18 @@
 package com.MyourCar.domain.services;
 
+import com.MyourCar.domain.BaseTimeEntity;
 import com.MyourCar.domain.cars.Cars;
 import com.MyourCar.domain.reports.Reports;
 import com.MyourCar.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,39 +21,44 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Services {
+public class Services extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private Double callLocationLatitude;
+
+    @Column(nullable = false)
+    private Double callLocationLongitude;
+
+    @Column(nullable = false)
+    private Timestamp serviceStartTime;
+
+    @Column(nullable = false)
+    private Timestamp serviceEndTime;
+
     @Column(length = 100, nullable = false)
-    private String call_location;
+    private String parkingType;
 
-    @Column
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date service_start_time;
-
-    @Column
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date service_end_time;
-
-    @Column(length = 100, nullable = false)
-    private String parking_type;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Cars cars;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @OneToMany(mappedBy = "services")
-    private Set<Reports> reports = new HashSet<>();
+    @OneToOne(mappedBy = "services")
+    private Reports reports;
 
     @Builder
-    public Services(String call_location, Date service_start_time, Date service_end_time, String parking_type) {
-        this.call_location = call_location;
-        this.service_start_time = service_start_time;
-        this.service_end_time = service_end_time;
-        this.parking_type = parking_type;
+    public Services(Double callLocationLatitude, Double callLocationLongitude, Timestamp serviceStartTime,
+                    Timestamp serviceEndTime, String parkingType,User user, Cars cars) {
+        this.callLocationLatitude = callLocationLatitude;
+        this.callLocationLongitude = callLocationLongitude;
+        this.serviceStartTime = serviceStartTime;
+        this.serviceEndTime = serviceEndTime;
+        this.parkingType = parkingType;
+        this.user = user;
+        this.cars = cars;
     }
 }
