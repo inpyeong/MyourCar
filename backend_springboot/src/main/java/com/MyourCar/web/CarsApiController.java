@@ -1,44 +1,56 @@
 package com.MyourCar.web;
 
+import com.MyourCar.domain.cars.Cars;
+import com.MyourCar.domain.cars.CarsRepository;
+import com.MyourCar.exception.BadRequestException;
+import com.MyourCar.exception.ResourceNotFoundException;
+import com.MyourCar.security.CurrentUser;
+import com.MyourCar.security.UserPrincipal;
 import com.MyourCar.service.cars.CarsService;
+import com.MyourCar.web.dto.CarsListResponseDto;
 import com.MyourCar.web.dto.CarsResponseDto;
 import com.MyourCar.web.dto.CarsSaveRequestDto;
 import com.MyourCar.web.dto.CarsUpdateRequestDto;
-import org.springframework.security.access.prepost.PreAuthorize;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 public class CarsApiController {
+
     private final CarsService carsService;
 
-    public CarsApiController(CarsService carsService){
-        this.carsService = carsService;
+    @GetMapping("/api/cars/{id}")
+    public CarsResponseDto findById(@PathVariable Long id) {
+        return carsService.findById(id);
+    }
+
+    @GetMapping("/api/cars")
+    public List<CarsListResponseDto> findByUser(@RequestParam Long userId) {
+        return carsService.findByUser(userId);
+    }
+
+    @GetMapping("/api/cars/recommend")
+    public List<CarsListResponseDto> findByCallCoordsAndCallServiceTime(@RequestParam String coords, @RequestParam String serviceTime) {
+        return carsService.findByCallCoordsAndCallServiceTime(coords, serviceTime);
     }
 
     @PostMapping("/api/cars")
-    public Long create(@RequestBody CarsSaveRequestDto carsSaveRequestDto){
-        return carsService.save(carsSaveRequestDto);
+    public Long save(@CurrentUser UserPrincipal userPrincipal, @RequestBody CarsSaveRequestDto carsSaveRequestDto){
+        return carsService.save(carsSaveRequestDto, userPrincipal);
     }
-
-//    @PutMapping("/api/cars")
-//    public Long update(@RequestBody CarsUpdateRequestDto requestDto) {
-//        return carsService.updateServiceEnable(requestDto);
-//    }
 
     @PatchMapping("/api/cars/{id}")
-    public Map<String, Object> patch(@PathVariable("id") long id, @RequestBody CarsUpdateRequestDto carsUpdateRequestDto) {
-        Map<String, Object> response = new HashMap<>();
-
-        if(carsService.patch(id, carsUpdateRequestDto) > 0) {
-            response.put("result", "SUCCESS");
-        } else {
-            response.put("result", "FAIL");
-            response.put("reason", "일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요.");
-        }
-
-        return response;
+    public Long update(@PathVariable Long id, @RequestBody CarsUpdateRequestDto requestDto) {
+        return carsService.update(id, requestDto);
     }
+
+    @DeleteMapping("/api/cars/{id}")
+    public Long delete(@PathVariable Long id) {
+        carsService.delete(id);
+        return id;
+    }
+
 }
