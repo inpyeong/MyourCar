@@ -16,7 +16,6 @@ public class UserResponseDto {
     private String email;
     private String password;
     private Integer state;
-    private String address;
     private Integer warning;
     private String imageUrl;
     private AuthProvider provider;
@@ -24,11 +23,13 @@ public class UserResponseDto {
     public UserResponseDto(UserPrincipal entity) {
         this.id = entity.getId();
         this.name = entity.getUsername();
-        this.phoneNumber = "01033637093";
+        this.phoneNumber = entity.getPhoneNumber();
         this.email = entity.getEmail();
         this.password = entity.getPassword();
         this.imageUrl = entity.getImageUrl();
         this.provider = entity.getProvider();
+        this.state = entity.getState();
+        this.warning = entity.getWarning();
     }
 
 }
