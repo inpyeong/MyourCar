@@ -6,57 +6,74 @@ import com.MyourCar.domain.cars.CarsRepository;
 import com.MyourCar.domain.reviews.Reviews;
 import com.MyourCar.domain.reviews.ReviewsRepository;
 import com.MyourCar.domain.user.UserRepository;
-import com.MyourCar.web.dto.CarsSaveRequestDto;
-import com.MyourCar.web.dto.CarsUpdateRequestDto;
-import com.MyourCar.web.dto.ReviewsSaveRequestDto;
-import com.nimbusds.oauth2.sdk.util.StringUtils;
+import com.MyourCar.web.dto.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.Converter;
+import java.lang.annotation.Annotation;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ReviewsService {
     private final ReviewsRepository reviewsRepository;
     private final CarsRepository carsRepository;
-    private final HttpSession httpSession;
 
-//    public CarsResponseDto findById(Long id) {
-//        Cars entity = carsRepository.findById(id)
-//                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. id=" + id));
-//
-//        return new CarsResponseDto(entity);
-//    }
-
-    @Transactional
-    public Long save(ReviewsSaveRequestDto reviewsSaveRequestDto) {
-        Cars car = carsRepository.getOne(4L);
-        Reviews reviews = reviewsSaveRequestDto.toEntity();
-        car.getReviews().add(reviews);
-        reviews.setCars(car);
-        return reviewsRepository.save(reviews).getId();
+    public ReviewsListResponseDto convertToDto(Reviews reviews) {
+        return new ReviewsListResponseDto((reviews));
     }
 
-//    @Transactional
-//    public int patch(long id, CarsUpdateRequestDto carsUpdateRequestDto) {
-//        Optional<Cars> optionalCars = carsRepository.findById(id);
-//        if (optionalCars.isPresent()) {
-//            Cars cars = optionalCars.get();
-//            if (StringUtils.isNotBlank(carsUpdateRequestDto.getReturn_location()))
-//                cars.setReturn_location(carsUpdateRequestDto.getReturn_location());
-//            if (carsUpdateRequestDto.getAvailable_start_time() != null)
-//                cars.setAvailable_start_time(carsUpdateRequestDto.getAvailable_start_time());
-//            if (carsUpdateRequestDto.getAvailable_end_time() != null)
-//                cars.setAvailable_end_time(carsUpdateRequestDto.getAvailable_end_time());
-//            if (carsUpdateRequestDto.getRent_fee() != null)
-//                cars.setRent_fee(carsUpdateRequestDto.getRent_fee());
-//            if (carsUpdateRequestDto.getDriving_fee() != null)
-//                cars.setDriving_fee(carsUpdateRequestDto.getDriving_fee());
-//            return 1;
-//        }
-//        return 0;
-//    }
+    @Transactional
+    public Long save(Long carId, ReviewsSaveRequestDto reviewsSaveRequestDto) {
+        Cars cars = carsRepository.getOne(carId);
+
+        return reviewsRepository.save(reviewsSaveRequestDto.toEntity(cars)).getId();
+    }
+
+    @Transactional(readOnly = true)
+    public ReviewsResponseDto findById(Long id) {
+        Reviews entity = reviewsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리뷰가 없습니다. id:" + id));
+
+        return new ReviewsResponseDto(entity);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ReviewsListResponseDto> findByCars(Long carId, Integer page, Integer size) {
+
+        Cars cars = carsRepository.getOne(carId);
+
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdDate"));
+
+        return reviewsRepository.findByCars(cars, pageRequest).map(this::convertToDto);
+    }
+
+    @Transactional
+    public Long update(Long id, ReviewsUpdateRequestDto requestDto) {
+        Reviews reviews = reviewsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리뷰가 없습니다. id:" + id));
+
+        reviews.update(requestDto.getScore(), requestDto.getComment());
+
+        return id;
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Reviews reviews = reviewsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리뷰가 없습니다. id:" + id));
+
+        reviewsRepository.delete(reviews);
+    }
+
+
 }

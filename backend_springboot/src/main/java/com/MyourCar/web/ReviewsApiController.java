@@ -3,44 +3,44 @@ package com.MyourCar.web;
 import com.MyourCar.domain.reviews.Reviews;
 import com.MyourCar.service.cars.CarsService;
 import com.MyourCar.service.reviews.ReviewsService;
-import com.MyourCar.web.dto.CarsSaveRequestDto;
-import com.MyourCar.web.dto.CarsUpdateRequestDto;
-import com.MyourCar.web.dto.ReviewsSaveRequestDto;
+import com.MyourCar.web.dto.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @RestController
 public class ReviewsApiController {
     private final ReviewsService reviewsService;
 
-    public ReviewsApiController(ReviewsService reviewsService){
-        this.reviewsService = reviewsService;
+    @PostMapping("/api/reviews/{carId}")
+    public Long save(@PathVariable Long carId, @RequestBody ReviewsSaveRequestDto reviewsSaveRequestDto){
+        return reviewsService.save(carId, reviewsSaveRequestDto);
     }
 
-    @PostMapping("/api/reviews")
-    public Long create(@RequestBody ReviewsSaveRequestDto reviewsSaveRequestDto){
-        return reviewsService.save(reviewsSaveRequestDto);
+    @GetMapping("/api/reviews")
+    public Page<ReviewsListResponseDto> findByCars(@RequestParam Long carId, @RequestParam Integer page, @RequestParam Integer size) {
+        return reviewsService.findByCars(carId, page, size);
     }
 
+    @GetMapping("api/review/{id}")
+    public ReviewsResponseDto findById(@PathVariable Long id) {
+        return reviewsService.findById(id);
+    }
 
-//    @PutMapping("/api/reviews")
-//    public Long update(@RequestBody CarsUpdateRequestDto requestDto) {
-//        return reviewsService.updateServiceEnable(requestDto);
-//    }
+    @PatchMapping("/api/reviews/{id}")
+    public Long update(@PathVariable Long id, @RequestBody ReviewsUpdateRequestDto requestDto) {
+        return reviewsService.update(id, requestDto);
+    }
 
-//    @PatchMapping("/api/reviews/{id}")
-//    public Map<String, Object> patch(@PathVariable("id") long id, @RequestBody CarsUpdateRequestDto carsUpdateRequestDto) {
-//        Map<String, Object> response = new HashMap<>();
-//
-//        if(carsService.patch(id, carsUpdateRequestDto) > 0) {
-//            response.put("result", "SUCCESS");
-//        } else {
-//            response.put("result", "FAIL");
-//            response.put("reason", "일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요.");
-//        }
-//
-//        return response;
-//    }
+    @DeleteMapping("/api/reviews/{id}")
+    public Long delete(@PathVariable Long id) {
+        reviewsService.delete(id);
+        return id;
+    }
+
 }

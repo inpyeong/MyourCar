@@ -14,17 +14,17 @@ public class ReviewsSaveRequestDto {
     private Integer score;
     private String comment;
 
-
     @Builder
     public ReviewsSaveRequestDto(Integer score, String comment) {
         this.score = score;
         this.comment = comment;
     }
 
-    public Reviews toEntity(){
+    public Reviews toEntity(Cars cars){
         return Reviews.builder()
                 .score(score)
                 .comment(comment)
+                .cars(cars)
                 .build();
     }
 }

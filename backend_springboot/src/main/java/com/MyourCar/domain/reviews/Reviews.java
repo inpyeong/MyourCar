@@ -1,7 +1,9 @@
 package com.MyourCar.domain.reviews;
 
+import com.MyourCar.domain.BaseTimeEntity;
 import com.MyourCar.domain.cars.Cars;
 import com.MyourCar.domain.user.User;
+import com.MyourCar.web.dto.ReviewsListResponseDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +16,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Reviews {
+public class Reviews extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,15 +24,21 @@ public class Reviews {
     @Column(nullable = false)
     private Integer score;
 
-    @Column(length = 20, nullable = false)
+    @Column
     private String comment;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Cars cars;
 
-    @Builder
-    public Reviews(Integer score, String comment) {
+    public void update(Integer score, String comment) {
         this.score = score;
         this.comment = comment;
+    }
+
+    @Builder
+    public Reviews(Integer score, String comment, Cars cars) {
+        this.score = score;
+        this.comment = comment;
+        this.cars = cars;
     }
 }
