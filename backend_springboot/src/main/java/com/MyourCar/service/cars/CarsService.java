@@ -3,16 +3,19 @@ package com.MyourCar.service.cars;
 import com.MyourCar.domain.cars.Cars;
 import com.MyourCar.domain.cars.CarsRepository;
 import com.MyourCar.domain.reviews.Reviews;
+import com.MyourCar.domain.services.Services;
+import com.MyourCar.domain.services.ServicesRepository;
 import com.MyourCar.domain.user.AuthProvider;
 import com.MyourCar.domain.user.User;
 import com.MyourCar.domain.user.UserRepository;
+import com.MyourCar.payload.ApiResponse;
 import com.MyourCar.security.UserPrincipal;
 import com.MyourCar.util.TimeUtils;
-import com.MyourCar.web.dto.CarsListResponseDto;
-import com.MyourCar.web.dto.CarsResponseDto;
-import com.MyourCar.web.dto.CarsSaveRequestDto;
-import com.MyourCar.web.dto.CarsUpdateRequestDto;
+import com.MyourCar.web.dto.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +30,8 @@ import java.util.stream.Collectors;
 public class CarsService {
     private final UserRepository userRepository;
     private final CarsRepository carsRepository;
+    private final ServicesRepository servicesRepository;
+    private final ObjectMapper objectMapper;
 
     @Transactional(readOnly = true)
     public CarsResponseDto findById(Long id) {
@@ -80,7 +85,7 @@ public class CarsService {
                 requestDto.getCurrentLocationLatitude(), requestDto.getCurrentLocationLongitude(),
                 requestDto.getReturnLocationLatitude(), requestDto.getReturnLocationLongitude(),
                 requestDto.getAvailableStartTime(), requestDto.getAvailableEndTime(), requestDto.getRentFee(),
-                requestDto.getDrivingFee(), requestDto.getBattery());
+                requestDto.getTimeFee(), requestDto.getBattery());
 
         return id;
     }
