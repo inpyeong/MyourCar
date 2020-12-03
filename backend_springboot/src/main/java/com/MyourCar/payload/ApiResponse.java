@@ -1,27 +1,19 @@
 package com.MyourCar.payload;
 
+import com.MyourCar.web.dto.CarsResponseDto;
+import com.MyourCar.web.dto.ServicesResponseDto;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ApiResponse {
-    private boolean success;
+    private Integer status;
     private String message;
 
-    public ApiResponse(boolean success, String message) {
-        this.success = success;
+    public ApiResponse(Integer status, String message) {
+        this.status = status;
         this.message = message;
     }
 
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 }
