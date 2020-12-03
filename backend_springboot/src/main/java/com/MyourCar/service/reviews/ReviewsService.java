@@ -62,7 +62,7 @@ public class ReviewsService {
         Reviews reviews = reviewsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 리뷰가 없습니다. id:" + id));
 
-        reviews.update(requestDto.getScore(), requestDto.getComment());
+        reviews.update(requestDto.getScore(), requestDto.getComment(), requestDto.getImage());
 
         return id;
     }

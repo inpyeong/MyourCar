@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 public class ReviewsUpdateRequestDto {
     private Integer score;
     private String comment;
-
+    private String image;
 }
