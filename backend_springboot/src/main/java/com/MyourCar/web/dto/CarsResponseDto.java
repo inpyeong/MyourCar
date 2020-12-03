@@ -25,7 +25,7 @@ public class CarsResponseDto {
     private Timestamp availableStartTime;
     private Timestamp availableEndTime;
     private Integer rentFee;
-    private Integer drivingFee;
+    private Integer timeFee;
     private Integer battery;
 
     public CarsResponseDto(Cars entity) {
@@ -40,7 +40,7 @@ public class CarsResponseDto {
         this.availableStartTime = entity.getAvailableStartTime();
         this.availableEndTime = entity.getAvailableEndTime();
         this.rentFee = entity.getRentFee();
-        this.drivingFee = entity.getDrivingFee();
+        this.timeFee = entity.getTimeFee();
         this.battery = entity.getBattery();
     }
 }
