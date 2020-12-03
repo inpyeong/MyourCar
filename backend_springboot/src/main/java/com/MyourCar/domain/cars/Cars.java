@@ -59,10 +59,10 @@ public class Cars {
     @Column
     private Integer rentFee;
 
-    @Column(length = 100)
-    private Integer drivingFee;
+    @Column
+    private Integer timeFee;
 
-    @Column(length = 100)
+    @Column
     private Integer battery;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -85,7 +85,7 @@ public class Cars {
 
     public void update(Integer serviceEnable, Double currentLocationLatitude, Double currentLocationLongitude,
                        Double returnLocationLatitude, Double returnLocationLongitude, Timestamp availableStartTime,
-                       Timestamp availableEndTime, Integer rentFee, Integer drivingFee, Integer battery) {
+                       Timestamp availableEndTime, Integer rentFee, Integer timeFee, Integer battery) {
         this.serviceEnable = serviceEnable;
         this.currentLocationLatitude = currentLocationLatitude;
         this.currentLocationLongitude = currentLocationLongitude;
@@ -94,7 +94,7 @@ public class Cars {
         this.availableStartTime = availableStartTime;
         this.availableEndTime = availableEndTime;
         this.rentFee = rentFee;
-        this.drivingFee = drivingFee;
+        this.timeFee = timeFee;
         this.battery = battery;
     }
 
