@@ -9,6 +9,7 @@ import java.util.Date;
 public class CarsListResponseDto {
     private Long id;
     private String name;
+    private Integer serviceEnable;
     private Double returnLocationLatitude;
     private Double returnLocationLongitude;
     private Double currentLocationLatitude;
@@ -16,20 +17,21 @@ public class CarsListResponseDto {
     private Date availableStartTime;
     private Date availableEndTime;
     private Integer rentFee;
-    private Integer drivingFee;
+    private Integer timeFee;
     private Integer battery;
 
     public CarsListResponseDto(Cars entity) {
         this.id = entity.getId();
         this.name = entity.getName();
-        this.returnLocationLatitude = entity.getCurrentLocationLatitude();
-        this.returnLocationLongitude = entity.getCurrentLocationLongitude();
+        this.serviceEnable = entity.getServiceEnable();
+        this.returnLocationLatitude = entity.getReturnLocationLatitude();
+        this.returnLocationLongitude = entity.getReturnLocationLongitude();
         this.currentLocationLatitude = entity.getCurrentLocationLatitude();
         this.currentLocationLongitude = entity.getCurrentLocationLongitude();
         this.availableStartTime = entity.getAvailableStartTime();
         this.availableEndTime = entity.getAvailableEndTime();
         this.rentFee = entity.getRentFee();
-        this.drivingFee = entity.getDrivingFee();
+        this.timeFee = entity.getTimeFee();
         this.battery = entity.getBattery();
     }
 
