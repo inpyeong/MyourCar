@@ -25,7 +25,7 @@ public class CarsUpdateRequestDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
     private Timestamp availableEndTime;
     private Integer rentFee;
-    private Integer drivingFee;
+    private Integer timeFee;
     private Integer battery;
 
 }
