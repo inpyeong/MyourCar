@@ -27,12 +27,15 @@ public class Reviews extends BaseTimeEntity {
     @Column
     private String comment;
 
+    private String image;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Cars cars;
 
-    public void update(Integer score, String comment) {
+    public void update(Integer score, String comment, String image) {
         this.score = score;
         this.comment = comment;
+        this.image = image;
     }
 
     @Builder
