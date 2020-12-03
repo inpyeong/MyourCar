@@ -2,6 +2,8 @@ package com.MyourCar.web;
 
 import com.MyourCar.domain.cars.Cars;
 import com.MyourCar.domain.cars.CarsRepository;
+import com.MyourCar.domain.services.Services;
+import com.MyourCar.domain.services.ServicesRepository;
 import com.MyourCar.domain.user.AuthProvider;
 import com.MyourCar.domain.user.User;
 import com.MyourCar.domain.user.UserRepository;
@@ -40,6 +42,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -55,6 +58,9 @@ public class CarsApiControllerTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ServicesRepository servicesRepository;
 
     @Autowired
     private WebApplicationContext context;
@@ -97,6 +103,23 @@ public class CarsApiControllerTest {
         Optional<Cars> optionalCars = carsRepository.findByName("볼보");
         assertThat(optionalCars.isPresent()).isTrue();
         assertThat(optionalCars.get().getUser().getId()).isEqualTo(1l);
+    }
+
+    @Test
+    @WithMockUser(roles="USER")
+    public void 예약차량_조회() throws Exception {
+        // Given
+        Optional<User> user = userRepository.findById(1l);
+        UserPrincipal userPrincipal = UserPrincipal.create(user.get());
+
+        // When
+        mvc.perform(get("/api/cars/reserved")
+                .param("userId", String.valueOf(1L))
+                .with(user(userPrincipal))
+                .header(HttpHeaders.AUTHORIZATION, "Bearer token eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjA2NzY3NTcyLCJleHAiOjE2MDc2MzE1NzJ9.zPeVr8hd_6PXVtAdZmytZqfx7SA3lBp-84vpmCnbw4SybmC1MMNf5Jv2NWngmvj1Wws2mhyIeylWoVuX2dAFiA"))
+                .andDo(print())
+                .andExpect(status().isOk());
+
     }
 
 //    @Test
