@@ -194,7 +194,6 @@
 				9BC1A5230C8840D27A118632 /* Pods-frontend_reactnative-tvOSTests.debug.xcconfig */,
 				781C92C62C57B63BA61B0F69 /* Pods-frontend_reactnative-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -420,10 +419,12 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-frontend_reactnative-frontend_reactnativeTests/Pods-frontend_reactnative-frontend_reactnativeTests-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -438,10 +439,12 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-frontend_reactnative/Pods-frontend_reactnative-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
