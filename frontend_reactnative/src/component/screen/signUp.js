@@ -18,6 +18,7 @@ import {
     TouchableWithoutFeedback,
     Keyboard,
 } from 'react-native';
+import { signUp } from '../../util/APIUtils';
 import Modal from 'react-native-modal';
 import {
     stepOneStyles,
@@ -33,21 +34,21 @@ export class StepOneScreen extends Component {
             phoneNumber: '',
             nativeInfo: '',
             nativeModal: false,
-            carrierInfo: '',
+            carrierInfo: '선택',
             carrierModal: false,
         };
     }
 
     setNativeInfo = (nativeInfo) => {
         this.setState({
-            nativeInfo: this.state.nativeInfo ? false : true
+            nativeInfo
         })
     }
 
-    setNativeInfo = (nativeInfo) => {
+    setCarrierInfo = (carrierInfo) => {
         this.setState({
-            nativeInfo: this.state.nativeInfo ? false : true
-        })
+            carrierInfo
+        }, () => this.handleCarrierModal());
     }
 
     handleNativeModal = () => {
@@ -76,17 +77,17 @@ export class StepOneScreen extends Component {
                                 <Text>내국인</Text>
                             </TouchableOpacity>
                             <TextInput
+                                style={stepOneStyles.nameTextInput}
                                 value={this.state.userName}
                                 onChangeText={userName => this.setState({ userName })}
                                 autoCapitalize='none'
-                                style={stepOneStyles.nameTextInput}
                                 placeholder="본인 실명"
                             />
                         </View>
                         <Modal
+                            style={{ justifyContent: 'flex-end', margin: 0}}
                             isVisible={this.state.nativeModal}
                             onBackdropPress={() => this.handleNativeModal()}
-                            style={{ justifyContent: 'flex-end', margin: 0}}
                         >
                             <View style={{
                                 backgroundColor: 'white',
@@ -113,38 +114,38 @@ export class StepOneScreen extends Component {
                             </View>
                         </Modal>
                     </View>
-                    <View style={stepOneStyles.serialNumberContainer}>
-                        <Text style={stepOneStyles.label}>주민등록번호 앞 7자리</Text>
-                        <View>
-                            <TextInput
-                                value={this.state.serialNumber}
-                                onChangeText={serialNumber => this.setState({ serialNumber })}
-                                autoCapitalize='none'
-                                style={stepOneStyles.serialNumberTextInput}
-                                secureTextEntry={true}
-                            />
-                            <Text 
-                                style={{ position: 'absolute', textAlignVertical: 'center', top: '35%', left: '3%', fontSize: 13, opacity: 0.1, fontWeight: 'bold', }}
-                            >
-                                {'\u25cf'}{'\u2003'}{'\u25cf'}{'\u2003'}{'\u25cf'}{'\u2003'}{'\u25cf'}{'\u2003'}{'\u25cf'}{'\u2003'}{'\u25cf'}{'\u2003'}
-                            </Text>
-                            <Text 
-                                style={{ position: 'absolute', textAlignVertical: 'center', top: '35%', left: '40%', fontSize: 13, opacity: 0.1, fontWeight: 'bold', }}
-                            >
-                                {'\u2015'}
-                            </Text>
-                            <Text 
-                                style={{ position: 'absolute', textAlignVertical: 'center', top: '35%', left: '43%', fontSize: 13, opacity: 0.1, fontWeight: 'bold', }}
-                            >
-                                {'\u2003'}{'\u25cf'}
-                            </Text>
-                            <Text 
-                                style={{ position: 'absolute', textAlignVertical: 'center', top: '34%', left: '50%', fontSize: 15, opacity: 0.1, fontWeight: 'bold', }}
-                            >
-                                {'\u2003'}{'\u22C7'}{'\u2003'}{'\u22C7'}{'\u2003'}{'\u22C7'}{'\u2003'}{'\u22C7'}{'\u2003'}{'\u22C7'}{'\u2003'}{'\u22C7'}
-                            </Text>
-                        </View>
-                    </View>
+                    {/*<View style={stepOneStyles.serialNumberContainer}>*/}
+                    {/*    <Text style={stepOneStyles.label}>주민등록번호 앞 7자리</Text>*/}
+                    {/*    <View>*/}
+                    {/*        <TextInput*/}
+                    {/*            value={this.state.serialNumber}*/}
+                    {/*            onChangeText={serialNumber => this.setState({ serialNumber })}*/}
+                    {/*            autoCapitalize='none'*/}
+                    {/*            style={stepOneStyles.serialNumberTextInput}*/}
+                    {/*            secureTextEntry={true}*/}
+                    {/*        />*/}
+                    {/*        <Text*/}
+                    {/*            style={{ position: 'absolute', textAlignVertical: 'center', top: '35%', left: '3%', fontSize: 13, opacity: 0.1, fontWeight: 'bold', }}*/}
+                    {/*        >*/}
+                    {/*            {'\u25cf'}{'\u2003'}{'\u25cf'}{'\u2003'}{'\u25cf'}{'\u2003'}{'\u25cf'}{'\u2003'}{'\u25cf'}{'\u2003'}{'\u25cf'}{'\u2003'}*/}
+                    {/*        </Text>*/}
+                    {/*        <Text*/}
+                    {/*            style={{ position: 'absolute', textAlignVertical: 'center', top: '35%', left: '40%', fontSize: 13, opacity: 0.1, fontWeight: 'bold', }}*/}
+                    {/*        >*/}
+                    {/*            {'\u2015'}*/}
+                    {/*        </Text>*/}
+                    {/*        <Text*/}
+                    {/*            style={{ position: 'absolute', textAlignVertical: 'center', top: '35%', left: '43%', fontSize: 13, opacity: 0.1, fontWeight: 'bold', }}*/}
+                    {/*        >*/}
+                    {/*            {'\u2003'}{'\u25cf'}*/}
+                    {/*        </Text>*/}
+                    {/*        <Text*/}
+                    {/*            style={{ position: 'absolute', textAlignVertical: 'center', top: '34%', left: '50%', fontSize: 15, opacity: 0.1, fontWeight: 'bold', }}*/}
+                    {/*        >*/}
+                    {/*            {'\u2003'}{'\u22C7'}{'\u2003'}{'\u22C7'}{'\u2003'}{'\u22C7'}{'\u2003'}{'\u22C7'}{'\u2003'}{'\u22C7'}{'\u2003'}{'\u22C7'}*/}
+                    {/*        </Text>*/}
+                    {/*    </View>*/}
+                    {/*</View>*/}
                     <View style={stepOneStyles.phoneNumberContainer}>
                         <Text style={stepOneStyles.label}>휴대폰 정보</Text>
                         <View style={{ flexDirection: 'column',}}>
@@ -153,7 +154,7 @@ export class StepOneScreen extends Component {
                                     style={stepOneStyles.selectCarrierInfo}
                                     onPress={this.handleCarrierModal}
                                 >
-                                    <Text>선택</Text>
+                                    <Text>{this.state.carrierInfo}</Text>
                                 </TouchableOpacity>
                                 <TextInput
                                     value={this.state.phoneNumber}
@@ -188,13 +189,17 @@ export class StepOneScreen extends Component {
                                 </View>
                                 <TouchableOpacity
                                     style={{ height: 60, justifyContent: 'center', paddingLeft: 20, }}
-                                    onPress={() => this.setNativeInfo('내국인')}
+                                    onPress={() => {
+                                        this.setCarrierInfo("SKT", () => this.handleCarrierModal());
+                                    }}
                                 >
                                     <Text>SKT</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={{ height: 60, justifyContent: 'center', marginBottom: 50, paddingLeft: 20, }}
-
+                                    onPress={() => {
+                                        this.setCarrierInfo("KT");
+                                    }}
                                 >
                                     <Text>KT</Text>
                                 </TouchableOpacity>
@@ -202,13 +207,13 @@ export class StepOneScreen extends Component {
                         </Modal>
                     </View>
                     <TouchableOpacity
-                        style={stepOneStyles.loginButton}
+                        style={stepOneStyles.button}
                         onPress={() => this.props.navigation.navigate('SignUpStepTwo', {
                             userName: this.state.userName,
                         })}
                     >
-                        <View style={stepOneStyles.loginButtonTextContainer}>
-                            <Text style={stepOneStyles.loginButtonText}>다음 단계</Text>
+                        <View style={stepOneStyles.buttonTextContainer}>
+                            <Text style={stepOneStyles.buttonText}>다음 단계</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -223,6 +228,7 @@ export class StepTwoScreen extends Component {
         this.state = {
             email: '',
             password: '',
+            secureTextEntry: false,
             confirmPassword: '',
         };
     }
@@ -269,11 +275,11 @@ export class StepTwoScreen extends Component {
                     <View style={stepTwoStyles.emailContainer}>
                         <Text style={stepTwoStyles.label}>아이디</Text>
                         <View style={stepTwoStyles.content}>
-                            <TextInput 
+                            <TextInput
                                 value={this.state.email}
                                 onChangeText={email => this.setState({ email })}
                                 autoCapitalize='none'
-                                placeholder='이메일 주소 입력'
+                                placeholder='아이디 입력'
                                 style={stepTwoStyles.textInput}
                             />
                         </View>
@@ -281,12 +287,14 @@ export class StepTwoScreen extends Component {
                     <View style={stepTwoStyles.passwordContainer}>
                         <Text style={stepTwoStyles.label}>비밀번호</Text>
                         <View style={stepTwoStyles.content}>
-                            <TextInput 
+                            <TextInput
                                 value={this.state.password}
                                 onChangeText={password => this.setState({ password })}
                                 autoCapitalize='none'
                                 placeholder='비밀번호 입력'
-                                secureTextEntry={true}
+                                secureTextEntry={this.state.secureTextEntry}
+                                onFocus={() => this.setState({ secureTextEntry: true })}
+                                // onBlur={() => this.setState({ secureTextEntry: false })}
                                 style={stepTwoStyles.textInput}
                             />
                         </View>
@@ -294,7 +302,7 @@ export class StepTwoScreen extends Component {
                     <View style={stepTwoStyles.confirmPasswordContainer}>
                         <Text style={stepTwoStyles.label}>비밀번호 확인</Text>
                         <View style={stepTwoStyles.content}>
-                            <TextInput 
+                            <TextInput
                                 value={this.state.confirmPassword}
                                 onChangeText={confirmPassword => this.setState({ confirmPassword })}
                                 autoCapitalize='none'
@@ -306,7 +314,26 @@ export class StepTwoScreen extends Component {
                     </View>
                     <TouchableOpacity
                         style={stepTwoStyles.submitButton}
-                        onPress={() => this.props.navigation.navigate('SignUpStepTwo')}
+                        onPress={() => {
+                            const requestBody = {
+                                name: userName,
+                                email: this.state.email,
+                                password: this.state.password,
+                            };
+                            signUp(requestBody)
+                                .then(res => {
+                                    Alert.alert(
+                                        "회원가입 완료",
+                                        "로그인 화면으로 이동합니다.",
+                                        [
+                                            { text: "확인", onPress: () => {
+                                                    this.props.navigation.navigate("Login");
+                                                }}
+                                        ]
+                                    );
+                                })
+                                .catch(err => console.log("error:" + err))
+                        }}
                     >
                         <View style={stepTwoStyles.submitButtonTextContainer}>
                             <Text style={stepTwoStyles.submitButtonText}>입력 완료</Text>

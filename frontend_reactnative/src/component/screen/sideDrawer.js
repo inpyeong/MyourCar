@@ -10,11 +10,12 @@ import React, {Component} from 'react';
 import {
     View,
     Text,
-    ScrollView,
+    ScrollView, TouchableOpacity, Image,
 } from 'react-native';
-import { CommonActions } from '@react-navigation/native';
+import {CommonActions, DrawerActions, useNavigation} from '@react-navigation/native';
+import Menu from '../../assets/pics/menu2.png';
 
-class SideDrawerScreen extends Component {
+export class SideDrawerScreen extends Component {
 
     navigateToScreen = (route) => () => {
         this.props.navigation.dispatch(
@@ -66,4 +67,21 @@ class SideDrawerScreen extends Component {
     }
 }
 
-export default SideDrawerScreen;
+export const OpenDrawer = () => {
+    const navigation = useNavigation();
+    return (
+        <View style={{ flexDirection: 'row', paddingRight: 15 }}>
+            <TouchableOpacity
+                onPress={() => {
+                    navigation.dispatch(DrawerActions.openDrawer());
+                }}
+            >
+                <Image
+                    style={{ width: 25, height: 30, marginLeft: 35, }}
+                    source={Menu}
+                />
+            </TouchableOpacity>
+        </View>
+    );
+}
+

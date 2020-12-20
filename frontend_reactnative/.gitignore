@@ -60,3 +60,6 @@ buck-out/
 
 # spring-boot-starter-oauth2-security
 ../backend_springboot/src/main/resources/
+
+# Constants
+src/constants/
