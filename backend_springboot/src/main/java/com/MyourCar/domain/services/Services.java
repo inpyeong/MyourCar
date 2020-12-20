@@ -41,6 +41,9 @@ public class Services extends BaseTimeEntity {
     @Column(length = 100, nullable = false)
     private String parkingType;
 
+    @Column(columnDefinition = "TINYINT", length = 1)
+    private Integer reviewExists = 0;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Cars cars;
 

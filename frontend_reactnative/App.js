@@ -8,15 +8,23 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
 import {
-    StyleSheet,
+    LogBox,
+    StatusBar,
     ActivityIndicator,
 } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import Screen from './src/component/screen';
+import {
+    NavigationContainer,
+} from '@react-navigation/native';
+import {
+    createDrawerNavigator,
+} from '@react-navigation/drawer';
+import StackNavigator from './src/component/screen';
 import AsyncStorage from '@react-native-community/async-storage';
+import { SideDrawerScreen } from './src/component/screen/sideDrawer';
 
-const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreAllLogs();
 
 class App extends Component {
     constructor(props) {
@@ -56,45 +64,14 @@ class App extends Component {
         })
     }
 
-    render() {
-        const LoginScreenOptions = { headerShown: false };
-        const SignUpScreenOptions = {
-            headerTitle: "휴대폰 본인인증",
-            headerBackTitleVisible: false,
-        };
-        const Oauth2ScreenOptions = {
-            headerTitle: "소셜 로그인",
-            headerBackTitleVisible: false,
-        }
-        const MainScreenOptions = {
-            headerShown: false,
-        }
+    isUnauthenticated = () => {
+        this.setState({
+            authenticated: false,
+        })
+    }
 
-        const authScreens = {
-            Login: {
-                screen: Screen.LoginScreen,
-                options: LoginScreenOptions,
-            },
-            SignUpStepOne: {
-                screen: Screen.StepOneScreen,
-                options: SignUpScreenOptions,
-            },
-            SignUpStepTwo: {
-                screen: Screen.StepTwoScreen,
-                options: SignUpScreenOptions,
-            },
-            Oauth2: {
-                screen: Screen.Oauth2Screen,
-                options: Oauth2ScreenOptions,
-                initialParams: { isAuthenticated: this.isAuthenticated },
-            },
-        };
-        const userScreens = {
-            Main: {
-                screen: Screen.MainScreen,
-                options: MainScreenOptions,
-            }
-        }
+    render() {
+
         if(this.state.loading) {
             return (
                 <ActivityIndicator
@@ -107,23 +84,38 @@ class App extends Component {
         }
         return (
             <NavigationContainer>
-                <Stack.Navigator>
-                    {Object.entries({
-                        ...(this.state.authenticated ? userScreens : authScreens),
-                    }).map(([name, props]) => (
-                        <Stack.Screen
-                            name={name}
-                            component={props.screen}
-                            options={props.options}
-                            initialParams={props.initialParams}
-                        />
-                    ))}
-                </Stack.Navigator>
+                <StatusBar barStyle={"dark-content"} />
+                <Drawer.Navigator
+                    drawerType="front"
+                    drawerPosition="left"
+                    drawerStyle={{
+                        width: 320,
+                    }}
+                    drawerContentOptions={{
+                        activeTintColor: 'red',
+                        activeBackgroundColor: 'skyblue',
+                    }}
+                    drawerContent={props => <SideDrawerScreen {...props} />}
+                    edgeWidth={0}
+                >
+                    <Drawer.Screen
+                        name="Route"
+                        options={{
+                            gestureEnabled: this.state.authenticated ? true : false,
+                        }}
+                    >
+                        {props =>
+                            <StackNavigator
+                                {...props}
+                                authenticated={this.state.authenticated}
+                                isAuthenticated={this.isAuthenticated}
+                                isUnauthenticated={this.isUnauthenticated}
+                            />}
+                    </Drawer.Screen>
+                </Drawer.Navigator>
             </NavigationContainer>
         );
     }
 }
-
-const styles = StyleSheet.create({});
 
 export default App;

@@ -20,6 +20,7 @@ import {
     Image,
     Button,
 } from 'react-native';
+import { login } from '../../util/APIUtils';
 import googleLogo from '../../assets/pics/googleLogo.png';
 import { loginStyles } from '../style/loginStyles';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -68,7 +69,7 @@ class LoginScreen extends Component {
                                 style={loginStyles.inputText}
                                 onChangeText={email => this.setState({ email })}
                                 autoCapitalize='none'
-                                placeholder="가입한 이메일 주소 입력"
+                                placeholder="아이디 입력"
                             />
                             <TextInput
                                 value={this.state.password}
@@ -81,6 +82,18 @@ class LoginScreen extends Component {
                         <View style={loginStyles.loginButtonContainer}>
                             <TouchableOpacity
                                 style={loginStyles.loginButton}
+                                onPress={() => {
+                                    const requestBody = {
+                                        email: this.state.email,
+                                        password: this.state.password,
+                                    };
+                                    login(requestBody)
+                                        .then(res => {
+                                            console.log(res);
+                                            AsyncStorage.setItem('token', res.accessToken);
+                                            this.props.route.params.isAuthenticated();
+                                        })
+                                }}
                             >
                                 <View style={loginStyles.loginButtonTextContainer}>
                                     <Text style={loginStyles.loginButtonText}>로그인하기</Text>
@@ -108,10 +121,6 @@ class LoginScreen extends Component {
                                 />
                             </TouchableOpacity>
                         </View>
-                        <Button 
-                            title='Clear AsyncStorage'
-                            onPress={() => AsyncStorage.clear()}
-                        />
                     </View>
                 </TouchableWithoutFeedback>
         );

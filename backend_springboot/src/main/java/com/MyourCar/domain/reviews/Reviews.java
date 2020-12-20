@@ -39,9 +39,10 @@ public class Reviews extends BaseTimeEntity {
     }
 
     @Builder
-    public Reviews(Integer score, String comment, Cars cars) {
+    public Reviews(Integer score, String comment, String image, Cars cars) {
         this.score = score;
         this.comment = comment;
+        this.image = image;
         this.cars = cars;
     }
 }

@@ -65,6 +65,16 @@ public class Cars {
     @Column
     private Integer battery;
 
+    private String certificateImage;
+
+    private String frontImage;
+
+    private String backImage;
+
+    private String rightImage;
+
+    private String leftImage;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     private User user;
@@ -76,10 +86,16 @@ public class Cars {
     private Set<Services> services = new HashSet<>();
 
     @Builder
-    public Cars(String name, String licensePlateNumber, User user) {
+    public Cars(String name, String licensePlateNumber, String certificateImage, String frontImage, String backImage,
+            String rightImage, String leftImage, User user) {
         this.name = name;
         this.licensePlateNumber = licensePlateNumber;
         this.serviceEnable = 0;
+        this.certificateImage = certificateImage;
+        this.frontImage = frontImage;
+        this.backImage = backImage;
+        this.rightImage = rightImage;
+        this.leftImage = leftImage;
         this.user = user;
     }
 
