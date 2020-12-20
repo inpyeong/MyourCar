@@ -20,18 +20,27 @@ public class Reports {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 225, nullable = false)
+    @Column(nullable = false)
     private String comment;
 
     @Column(nullable = false)
     private Integer type;
 
-    @OneToOne
+    @Column
+    private String firstImage;
+
+    @Column
+    private String secondImage;
+
+    @OneToOne(fetch = FetchType.LAZY)
     private Services services;
 
     @Builder
-    public Reports(String comment, Integer type){
+    public Reports(String comment, Integer type, String firstImage, String secondImage, Services services){
         this.comment = comment;
         this.type = type;
+        this.firstImage = firstImage;
+        this.secondImage = secondImage;
+        this.services = services;
     }
 }

@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -16,8 +17,12 @@ public class ReviewsResponseDto {
     private Long id;
     private Integer score;
     private String comment;
+    private LocalDateTime modifiedDate;
 
     public ReviewsResponseDto(Reviews entity) {
         this.id = entity.getId();
+        this.score = entity.getScore();
+        this.comment = entity.getComment();
+        this.modifiedDate = entity.getModifiedDate();
     }
 }

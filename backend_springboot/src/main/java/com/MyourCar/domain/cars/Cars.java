@@ -3,20 +3,25 @@ package com.MyourCar.domain.cars;
 import com.MyourCar.domain.reviews.Reviews;
 import com.MyourCar.domain.services.Services;
 import com.MyourCar.domain.user.User;
-import com.MyourCar.web.dto.ReviewsSaveRequestDto;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
 @Getter
 @Setter
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = "licensePlateNumber")
+})
 @NoArgsConstructor
 @Entity
 public class Cars {
@@ -27,60 +32,86 @@ public class Cars {
     @Column(length = 20, nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private Integer service_enable;
-
-    @Column(length = 100, nullable = false)
-    private String return_location;
-
-    @Column(length = 100, nullable = false)
-    private String current_detailed_location;
-
-    @Column(length = 100, nullable = false)
-    private String current_district_location;
-
     @Column
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date available_start_time;
-
-    @Column
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date available_end_time;
+    private String licensePlateNumber;
 
     @Column(nullable = false)
-    private Integer rent_fee;
+    private Integer serviceEnable;
 
-    @Column(length = 100, nullable = false)
-    private Integer driving_fee;
+    @Column
+    private Double returnLocationLatitude;
 
-    @Column(length = 100, nullable = false)
+    @Column
+    private Double returnLocationLongitude;
+
+    @Column
+    private Double currentLocationLatitude;
+
+    @Column
+    private Double currentLocationLongitude;
+
+    @Column
+    private Timestamp availableStartTime;
+
+    @Column
+    private Timestamp availableEndTime;
+
+    @Column
+    private Integer rentFee;
+
+    @Column
+    private Integer timeFee;
+
+    @Column
     private Integer battery;
 
-    @ManyToOne
+    private String certificateImage;
+
+    private String frontImage;
+
+    private String backImage;
+
+    private String rightImage;
+
+    private String leftImage;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private User user;
 
     @OneToMany(mappedBy = "cars")
     private Set<Reviews> reviews = new HashSet<>();
 
-//    @OneToOne(mappedBy = "cars")
-//    private Services services;
-
     @OneToMany(mappedBy = "cars")
     private Set<Services> services = new HashSet<>();
 
     @Builder
-    public Cars(String name, Integer service_enable, String return_location, String current_detailed_location,
-                String current_district_location, Date available_start_time, Date available_end_time, Integer rent_fee,
-                Integer driving_fee, Integer battery) {
+    public Cars(String name, String licensePlateNumber, String certificateImage, String frontImage, String backImage,
+            String rightImage, String leftImage, User user) {
         this.name = name;
-        this.service_enable = service_enable;
-        this.return_location = return_location;
-        this.current_detailed_location = current_detailed_location;
-        this.current_district_location = current_district_location;
-        this.available_start_time = available_start_time;
-        this.available_end_time = available_end_time;
-        this.rent_fee = rent_fee;
-        this.driving_fee = driving_fee;
+        this.licensePlateNumber = licensePlateNumber;
+        this.serviceEnable = 0;
+        this.certificateImage = certificateImage;
+        this.frontImage = frontImage;
+        this.backImage = backImage;
+        this.rightImage = rightImage;
+        this.leftImage = leftImage;
+        this.user = user;
+    }
+
+    public void update(Integer serviceEnable, Double currentLocationLatitude, Double currentLocationLongitude,
+                       Double returnLocationLatitude, Double returnLocationLongitude, Timestamp availableStartTime,
+                       Timestamp availableEndTime, Integer rentFee, Integer timeFee, Integer battery) {
+        this.serviceEnable = serviceEnable;
+        this.currentLocationLatitude = currentLocationLatitude;
+        this.currentLocationLongitude = currentLocationLongitude;
+        this.returnLocationLatitude = returnLocationLatitude;
+        this.returnLocationLongitude = returnLocationLongitude;
+        this.availableStartTime = availableStartTime;
+        this.availableEndTime = availableEndTime;
+        this.rentFee = rentFee;
+        this.timeFee = timeFee;
         this.battery = battery;
     }
+
 }

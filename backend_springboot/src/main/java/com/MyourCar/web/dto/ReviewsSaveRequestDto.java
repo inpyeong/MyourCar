@@ -13,18 +13,21 @@ import java.util.Date;
 public class ReviewsSaveRequestDto {
     private Integer score;
     private String comment;
-
+    private String image;
 
     @Builder
-    public ReviewsSaveRequestDto(Integer score, String comment) {
+    public ReviewsSaveRequestDto(Integer score, String comment, String image) {
         this.score = score;
         this.comment = comment;
+        this.image = image;
     }
 
-    public Reviews toEntity(){
+    public Reviews toEntity(Cars cars){
         return Reviews.builder()
                 .score(score)
                 .comment(comment)
+                .image(image)
+                .cars(cars)
                 .build();
     }
 }

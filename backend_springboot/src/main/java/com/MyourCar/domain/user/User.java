@@ -2,7 +2,12 @@ package com.MyourCar.domain.user;
 
 import com.MyourCar.domain.cars.Cars;
 import com.MyourCar.domain.services.Services;
+import com.MyourCar.security.UserPrincipal;
+import com.MyourCar.web.dto.UserUpdateRequestDto;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +34,7 @@ public class User {
     @Column(nullable = false)
     private String name;
 
-    @Email
+//    @Email
     @Column(nullable = false)
     private String email;
 
@@ -50,20 +55,42 @@ public class User {
 
 
     @Column(length = 20, nullable = false)
-    private String phoneNumber;
+    private String phoneNumber = "01000000000";
 
     @Column(nullable = false)
-    private Integer state;
+    private Integer state = 0;
 
     @Column(length = 100, nullable = false)
-    private Integer warning;
+    private Integer warning = 0;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private Set<Cars> cars = new HashSet<>();
-
-//    @OneToMany(mappedBy = "user")
-//    private Services services;
 
     @OneToMany(mappedBy = "user")
     private Set<Services> services = new HashSet<>();
+
+    public void update(UserUpdateRequestDto requestDto, String columnName) {
+
+        switch(columnName)
+        {
+            case "password":
+                String newPassword = requestDto.getPassword();
+                this.password = newPassword;
+                break;
+            case "introduce":
+                System.out.println("Set new introduce");
+                break;
+            case "phoneNumber":
+                this.phoneNumber = requestDto.getPhoneNumber();
+                break;
+            default:
+                throw new IllegalArgumentException("질의문자열이 잘못 입력되었습니다.");
+        }
+    }
+
+    @Builder
+    public User(UserPrincipal userPrincipal) {
+
+    }
 }

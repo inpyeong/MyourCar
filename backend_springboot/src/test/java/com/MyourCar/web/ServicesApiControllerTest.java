@@ -65,27 +65,4 @@ public class ServicesApiControllerTest {
                 .apply(springSecurity())
                 .build();
     }
-
-    @Test
-    @Transactional
-    @WithMockUser(roles="GUEST")
-    public void ServicePost() throws Exception {
-        ServicesSaveRequestDto servicesSaveRequestDto = ServicesSaveRequestDto.builder()
-                .call_location("서울시 강서구")
-                .service_start_time(new Date(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                        .parse("2020-10-20 22:00:00").getTime()))
-                .service_end_time(new Date(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                        .parse("2020-10-20 22:00:00").getTime()))
-                .parking_type("지하 주차장")
-                .build();
-
-        String content = objectMapper.writeValueAsString(servicesSaveRequestDto);
-        mvc.perform(post("/api/services")
-                .content(content)
-                .contentType(MediaType.APPLICATION_JSON));
-
-        // then
-//        Optional<Reviews> reviews1 = reviewsRepository.findById(4L);
-//        assertThat(reviews1.get().getCars().getName()).isEqualTo("씹새끼");
-    }
 }

@@ -2,22 +2,29 @@ package com.MyourCar.service.user;
 
 import com.MyourCar.domain.user.User;
 import com.MyourCar.domain.user.UserRepository;
-import com.MyourCar.web.dto.UserResponseDto;
+import com.MyourCar.security.UserPrincipal;
+import com.MyourCar.web.dto.UserUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class UserService {
-    private final UserRepository usersRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-//    public UserResponseDto findById(Long id) {
-//
-//        User entity = usersRepository.findById(id)
-//                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. id=" + id));
-//
-//        return new UserResponseDto(entity);
-//    }
+    @Transactional
+    public Long update(UserUpdateRequestDto requestDto, UserPrincipal userPrincipal, String columnName) {
+        Optional<User> optionalUser = userRepository.findById(userPrincipal.getId());
+        if(columnName.equals("password")) {
+            requestDto.setPassword(passwordEncoder.encode(requestDto.getPassword()));
+        }
+        optionalUser.get().update(requestDto, columnName);
+
+        return optionalUser.get().getId();
+    }
 }
