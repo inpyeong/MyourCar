@@ -3,7 +3,7 @@ jdk: openjdk8
 
 branches:
   only:
-    - phase_2
+    - master
 
 # Travis CI 서버의 Home
 cache:
