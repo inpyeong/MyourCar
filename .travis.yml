@@ -15,7 +15,7 @@ cache:
 before_install:
   - chmod +x gradlew
 
-script: "./gradlew clean build"
+script: "./backend_springboot/gradlew clean build"
 
 # CI 실행 완료시 메일로 알람
 notifications:
