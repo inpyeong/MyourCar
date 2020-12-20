@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { Directions } from 'react-native-gesture-handler';
 
 export const stepOneStyles = StyleSheet.create({
     flexContainer: {
@@ -15,16 +14,13 @@ export const stepOneStyles = StyleSheet.create({
     },
     content: {
         flexDirection: 'row',
-        alignItems: 'flex-start',
-        justifyContent: 'center',
     },
     nameTextInput: {
         width: 270,
         height: 60,
         padding: 10,
-        borderTopWidth: 1,
-        borderBottomWidth: 1,
-        borderRightWidth: 1,
+        borderWidth: 1,
+        borderLeftWidth: 0,
         borderColor: '#CACACA',
         backgroundColor: '#FFFFFF',
     },
@@ -99,17 +95,17 @@ export const stepOneStyles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 17,
     },
-    loginButton: {
+    button: {
         backgroundColor: '#3897f1',
         width: '100%',
         height: 90,
     },
-    loginButtonTextContainer: {
+    buttonTextContainer: {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
     },
-    loginButtonText: {
+    buttonText: {
         color: "#ffffff",
         textAlign: 'center',
         fontSize: 18,
@@ -192,5 +188,6 @@ export const stepTwoStyles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 18,
         marginBottom: 20,
-    }
+    },
+
 });

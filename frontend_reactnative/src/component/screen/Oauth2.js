@@ -13,8 +13,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 import DeepLinking from 'react-native-deep-linking';
 
 const testURL = 'http://localhost:8080/api/user';
-const _testURL = 'http://localhost:8080/oauth2/authorization/google';
-const __testURL = 'http://localhost:8080/oauth2/authorize/google?redirect_uri=myapp://';
+const _testURL = 'http://ec2-13-125-153-65.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorize/google?redirect_uri=myapp://';
+const __testURL = 'http://192.168.0.101.xip.io:8080/oauth2/authorize/google?redirect_uri=myapp://';
+const ___testURL = 'http://localhost:8080/oauth2/authorize/google?redirect_uri=myapp://';
 
 class Oauth2Screen extends Component {
     constructor(props) {
@@ -120,7 +121,6 @@ class Oauth2Screen extends Component {
 
     render() {
         return (
-            <>
                 <SafeAreaView style={styles.flexContainer}>
                     <WebView
                         source={{ uri: __testURL }}
@@ -134,8 +134,12 @@ class Oauth2Screen extends Component {
                         onShouldStartLoadWithRequest={(req) => {
                             if (req.url.includes('?token')) {
                                 console.log(req.url);
-                                console.log(req.url.split('=')[1].slice(0, -1));
-                                const token = req.url.split('=')[1].slice(0, -1);
+                                console.log(req.url.split('=')[1]);
+                                let token = req.url.split('=')[1];
+                                if(token.endsWith('#')) {
+                                    token = token.slice(0, -1);
+                                }
+                                console.log(token);
                                 this.setState({ token: token }, () => {
                                     AsyncStorage.setItem('token', token);
                                     // this.props.navigation.navigate("Login");
@@ -145,19 +149,18 @@ class Oauth2Screen extends Component {
                             } else return true;
                         }}
                     />
-                    <View style={styles.tabBarContainer}>
-                        <TouchableOpacity onPress={this.webViewGoBack}>
-                            <Text style={{ color: "green" }}>Back</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={this.testFunc}>
-                            <Text style={{ color: "green" }}>Exit</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={this.webViewNext}>
-                            <Text style={{ color: "green" }}>Next</Text>
-                        </TouchableOpacity>
-                    </View>
+                    {/*<View style={styles.tabBarContainer}>*/}
+                    {/*    <TouchableOpacity onPress={this.webViewGoBack}>*/}
+                    {/*        <Text style={{ color: "green" }}>Back</Text>*/}
+                    {/*    </TouchableOpacity>*/}
+                    {/*    <TouchableOpacity onPress={this.testFunc}>*/}
+                    {/*        <Text style={{ color: "green" }}>Exit</Text>*/}
+                    {/*    </TouchableOpacity>*/}
+                    {/*    <TouchableOpacity onPress={this.webViewNext}>*/}
+                    {/*        <Text style={{ color: "green" }}>Next</Text>*/}
+                    {/*    </TouchableOpacity>*/}
+                    {/*</View>*/}
                 </SafeAreaView>
-            </>
         );
     }
 
@@ -166,8 +169,8 @@ class Oauth2Screen extends Component {
 
 const styles = StyleSheet.create({
     ActivityIndicatorStyle: {
-        flex: 1,
-        justifyContent: "center",
+        backgroundColor: "#FFF",
+        height: '100%',
     },
     flexContainer: {
         flex: 1,
