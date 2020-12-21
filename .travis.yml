@@ -14,8 +14,7 @@ cache:
 
 script: "./backend_springboot/gradlew clean build"
 
-before_install:
-  - chmod +x ./backend_springboot/gradlew
+before_deploy:
   - zip -r myourcar ./backend_springboot
   - mkdir -p deploy
   - mv myourcar.zip deploy/myourcar.zip
