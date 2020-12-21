@@ -12,7 +12,7 @@ cache:
     - '$HOME.m2/repository'
     - '$HOME.gradle'
 
-script: "./backend_springboot/gradlew -p ./backend_springboot clean build"
+script: "./backend_springboot/gradlew -p ./backend_springboot -x test clean build"
 
 before_deploy:
   - zip -r myourcar ./backend_springboot
