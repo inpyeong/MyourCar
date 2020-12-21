@@ -12,7 +12,7 @@ cache:
     - '$HOME.m2/repository'
     - '$HOME.gradle'
 
-script: "./backend_springboot/gradlew clean build --stacktrace"
+script: "./backend_springboot/gradlew build"
 
 before_install:
   - chmod +x ./backend_springboot/gradlew
