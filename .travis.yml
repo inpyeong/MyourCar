@@ -9,10 +9,10 @@ branches:
 # Travis CI 서버의 Home
 cache:
   directories:
-    - '$HOME/backend_springboot/.m2/repository'
-    - '$HOME/backend_springboot/.gradle'
+    - '$HOME.m2/repository'
+    - '$HOME.gradle'
 
-script: "./backend_springboot/gradlew clean build"
+script: "./backend_springboot/gradlew clean build --stacktrace"
 
 before_install:
   - chmod +x ./backend_springboot/gradlew
